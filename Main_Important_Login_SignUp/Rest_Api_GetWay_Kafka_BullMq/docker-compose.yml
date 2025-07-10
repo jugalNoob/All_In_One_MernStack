@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v3.0
+    container_name: traefik
+    restart: unless-stopped
+    command:
+      - --configFile=/etc/traefik/traefik.yml
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yml:/etc/traefik/traefik.yml
+
+  whoami:
+    image: traefik/whoami
+    container_name: whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.traefik.entrypoints=web"
+      - "traefik.http.routers.traefik.service=api@internal"
+
+  express-api:
+    build:
+      context: ./server
+    container_name: express-api
+    labels: 
+    - "traefik.enable=true"
+    - "traefik.http.routers.api.entrypoints=web"
+    - "traefik.http.services.api.loadbalancer.server.port=9000"
+    - 'traefik.http.routers.api.rule=Host("api.localhost")'
+
+       # ✅ Add Rate Limiting middleware
+   # ✅ Rate limit: 5 requests per 10 seconds per IP
+    - "traefik.http.middlewares.api-ratelimit.ratelimit.average=1"
+    - "traefik.http.middlewares.api-ratelimit.ratelimit.period=2s"
+    - "traefik.http.middlewares.api-ratelimit.ratelimit.burst=5"

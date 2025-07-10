@@ -1,0 +1,45 @@
+1::Consistent Hashing  :::::::::::::::::::::::
+
+1. Distributed Caching
+Use Case: Efficiently distribute and retrieve cached data across multiple servers.
+Example:
+Systems like Memcached or Redis clusters use consistent hashing to ensure that when a new cache node is added, only a fraction of the existing keys need to be remapped, minimizing cache invalidations.
+2. Load Balancing
+Use Case: Distribute traffic or requests evenly across servers while gracefully handling server failures or additions.
+Example:
+Load balancers use consistent hashing to ensure requests for a particular client or resource are always directed to the same server, enhancing performance and reducing session migration issues.
+3. Content Delivery Networks (CDNs)
+Use Case: Distribute and store content efficiently across geographically distributed servers.
+Example:
+CDNs like Akamai or Cloudflare use consistent hashing to route users to the nearest server storing the requested content and reduce the impact when new servers are added or removed.
+4. Distributed Databases
+Use Case: Distribute data across multiple database shards while minimizing data movement when nodes are added or removed.
+Example:
+Systems like Cassandra and DynamoDB use consistent hashing to distribute keys across nodes, ensuring even data distribution and fault tolerance in case of node failures.
+5. Peer-to-Peer Networks
+Use Case: Efficiently locate and retrieve data in decentralized networks.
+Example:
+Peer-to-peer protocols like BitTorrent or Chord DHT (Distributed Hash Tables) use consistent hashing to map data blocks to peers, enabling efficient lookups and balancing data storage among peers.
+6. Microservices Architecture
+Use Case: Route client requests to the correct microservice instance for stateful services.
+Example:
+A microservices system may use consistent hashing to route user-specific requests (e.g., shopping carts) to the same service instance, ensuring data locality and reducing inter-service communication.
+7. Message Queues
+Use Case: Distribute messages across multiple brokers or consumers in a distributed message queue system.
+Example:
+Message brokers like Kafka can use consistent hashing to route messages with the same key (e.g., user ID) to the same partition, ensuring message ordering and efficient consumption.
+Advantages of Consistent Hashing:
+Minimized Key Redistribution: When nodes are added or removed, only a small subset of keys is remapped.
+Scalability: Nodes can be added or removed without significant disruption.
+Fault Tolerance: Works well in systems with dynamic node availability.
+Limitations:
+Uneven Load Distribution: Without proper techniques like "virtual nodes," the load may be uneven across nodes.
+Complexity: Implementation is more complex compared to simpler hashing strategies.
+Dependency on Hash Function: Poor choice of hash function can lead to imbalanced key distribution.
+Example:
+Suppose you have a distributed cache with three servers (A, B, C). When a new server (D) is added:
+
+Without Consistent Hashing: All keys may need to be remapped, disrupting the system.
+With Consistent Hashing: Only keys assigned to a few servers (based on the hash function) need remapping, minimizing disruption.
+Consistent Hashing is indispensable for building scalable and fault-tolerant distributed systems, ensuring efficient resource utilization and minimal downtime during changes.
+

@@ -1,0 +1,29 @@
+PORT="9000"
+
+DATABASE="mongodb+srv://jugal786:jugal786@cluster0.sgg8t.mongodb.net/ones?retryWrites=true&w=majority"
+
+SECRET_KEY=khjjhuhuidsuiuiojfsioujiojfuvuiojfvjiofvdoiujfvdoiujvfoijvf
+
+Clientids="449090463
+715-
+ego58b8ifcj7vj6pfrv
+p39pnb6iuvik0
+.apps.googleuserc
+ontent.
+com"
+
+ClientSecrets="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"
+
+sessionsecret="kjldscjhdschicfsuhgcsduhgcdsfuhgcdsfuyhgcfsuhguhgcfs",
+
+
+
+:::::::::: Montring ::::::::::::::::
+
+global:
+  scrape_interval: 7s
+
+scrape_configs:
+  - job_name: nodejs
+    static_configs:
+      - targets: ["192.168.29.78:9000"]

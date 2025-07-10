@@ -1,0 +1,174 @@
+1. Introduction to MongoDB
+What is MongoDB?
+NoSQL, document-oriented database.
+Stores data in flexible, JSON-like documents.
+Comparison with SQL Databases
+Schema-less vs. predefined schemas.
+Collections vs. tables.
+Documents vs. rows.
+
+2. Core MongoDB Concepts
+Database: Container for collections.
+Collections: Groups of documents, akin to tables in SQL.
+Documents: JSON-like records (BSON format).
+Fields: Key-value pairs in a document.
+Indexes: Structures to optimize query performance.
+Replica Set: A group of MongoDB servers that maintain the same data set.
+Sharding: Horizontal partitioning of data across servers.
+
+
+3. Data Modeling in MongoDB
+Document Model: Embedded documents and arrays.
+Denormalization: Favor embedding documents over references to avoid JOINs.
+Schema Design Patterns:
+Embedding vs. Referencing.
+Bucket Pattern, Attribute Pattern, and Polymorphic Schemas.
+
+
+4. CRUD Operations
+Create:
+insertOne(): Inserts a single document.
+insertMany(): Inserts multiple documents.
+
+Read:
+find(): Retrieves documents from a collection.
+Query Filters: Equality, comparison operators ($eq, $gt, $lt), logical operators ($or, $and), and regex.
+
+Update:
+updateOne(), updateMany(): Modify documents.
+$set, $inc, $unset update operators.
+Upserts (update or insert).
+
+Delete:
+deleteOne(), deleteMany(): Remove documents.
+Projections: Limiting fields returned by a query.
+Sorting and Pagination: Using .sort() and .limit().
+
+
+5. Indexes
+Purpose: Speed up read queries.
+Types of Indexes:
+Single field index.
+Compound index.
+Multikey index (for arrays).
+Text index (for text search).
+Geospatial index.
+Index Operations: createIndex(), dropIndex().
+Indexing Best Practices: Only index fields used frequently in queries.
+
+
+6. Aggregation Framework
+Purpose: Advanced querying and data processing.
+Stages in Aggregation Pipeline:
+$match: Filters documents.
+$group: Groups documents and performs operations like sum, avg.
+$project: Reshapes documents.
+$sort, $skip, $limit: Sorting and pagination.
+$lookup: Joins collections (similar to SQL joins).
+$unwind: Deconstructs arrays.
+
+
+7. Replication
+What is Replication?
+High availability, disaster recovery.
+Replica Sets:
+Primary: Handles all write operations.
+Secondaries: Replicate data from primary.
+Arbiter: Participates in election but does not hold data.
+Failover: Automatic election of a new primary in case of failure.
+
+
+8. Sharding
+What is Sharding?
+Distributes data across multiple servers for horizontal scaling.
+Shard Keys: Determines how data is partitioned.
+Sharded Cluster:
+Config Servers: Store metadata.
+Shards: Actual data storage.
+Query Router (mongos): Routes queries to appropriate shards.
+Balancing: Redistributes data between shards automatically.
+
+
+9. Transactions in MongoDB
+Single Document Atomicity: MongoDB guarantees atomicity at the document level.
+Multi-Document Transactions (Introduced in version 4.0):
+Support for ACID transactions.
+startTransaction(), commitTransaction(), abortTransaction().
+
+
+10. MongoDB Performance Tuning
+Schema Design Optimization: Denormalization, embedding documents.
+Index Optimization: Proper index usage.
+Query Optimization: Analyze using explain().
+Read/Write Scaling:
+Replication for read scaling.
+Sharding for write scaling.
+
+
+
+11. MongoDB Security
+Authentication: Ensuring users are who they claim to be (SCRAM, x.509).
+Authorization: Role-based access control (RBAC).
+Encryption:
+In-transit encryption (SSL/TLS).
+Encryption at rest (with MongoDB Enterprise).
+Auditing: Tracking and recording database events.
+Backup and Restore: Using mongodump, mongorestore, and point-in-time backups.
+
+
+12. MongoDB Backup and Restore
+Backup Strategies:
+Logical Backup: Using mongodump and mongorestore.
+Physical Backup: Snapshot-based backups.
+Cloud Backups: Managed MongoDB services (MongoDB Atlas) provide automated backups.
+Restoring Data: Procedures for recovering data from backups.
+
+
+13. MongoDB Tools
+Mongo Shell: The interactive JavaScript interface.
+MongoDB Compass: GUI for exploring and managing data.
+mongodump and mongorestore: Tools for backing up and restoring.
+mongoimport and mongoexport: Importing and exporting data in JSON/CSV.
+mongostat and mongotop: Monitoring tools.
+
+
+14. MongoDB Atlas
+What is MongoDB Atlas?: Fully managed cloud database service.
+Cluster Management: Scaling, monitoring, and backups.
+Global Clusters: Data distribution across multiple geographic regions.
+Serverless Instances: Automatically scales resources based on workload.
+
+
+15. MongoDB Drivers and Integrations
+Official Drivers: Available for many languages (Node.js, Python, Java, Go, etc.).
+ODM/ORM:
+Mongoose for Node.js.
+PyMongo for Python.
+Integration with Big Data Tools:
+Spark Connector, Hadoop Integration.
+
+
+16. Advanced MongoDB Features
+GridFS: For storing large files (exceeding BSON document size limit of 16MB).
+TTL Indexes: Automatically expire data.
+Change Streams: Track changes to documents in real-time.
+Capped Collections: Fixed-size collections that automatically overwrite oldest entries.
+Time Series Collections: Optimized for time-series data.
+
+
+17. MongoDB Cloud and Deployment
+MongoDB Atlas: Cloud-hosted MongoDB.
+Self-hosting MongoDB: Installation and configuration on various platforms.
+Backup and Monitoring Services: Cloud monitoring, alerts, and performance analysis.
+
+
+18. Best Practices
+Schema Design: Favor embedding over referencing when possible.
+Indexing: Only index frequently queried fields.
+Sharding Considerations: Use a good shard key to avoid uneven distribution.
+Monitoring: Use monitoring tools (Atlas, mongostat, mongotop) to track performance.
+
+
+19. Version-Specific Features
+MongoDB 4.x: Introduction of ACID transactions, retryable writes, etc.
+MongoDB 5.x: Time-series collections, live resharding, and versioned API.

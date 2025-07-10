@@ -1,0 +1,52 @@
+...explain() // explain how find work mean of explain
+
+1::db.users.find({age:{$lt:"30"}}).explain()
+
+2::db.users.find({age:{$lt:"30"}}).explain("executionStats")
+
+
+|||||||Index start row  class|||||||||||||
+
+1::db.dataall.createIndex({age:1})
+2::db.dataall.getIndexes()
+3::db.dataall.dropIndexes("age_1")
+4::db.dataall.dropIndexes("age":1")
+5::db.dataall.dropAllIndexes();
+6::db.users.getMongo()
+'mongodb+srv://<credentials>@cluster0.sgg8t.mongodb.net/ones?retryWrites=true&w=majority&appName=MongoDB+Compass'
+7::db.users.getIndexKeys()
+8::db.users.getCollection().getFullName()
+9::db.users.getDB().getName()
+10::db.users.getIndexSpecs()
+var indexes = db.users.getIndexes();
+
+
+indexes.forEach(function(index) {
+    if (index.name !== "_id_") { // Exclude the default _id index
+        db.users.dropIndex(index.name);
+        print("Dropped index: " + index.name);
+    }
+});
+
+
+|||||||||||||||||||||||
+...Order Matters
+
+db.users.createIndex({"age": 1, "gender": 1})
+db.users.find({age:{$lt:"30" , gender:"male"}}).explain()
+db.users.dropIndex("age_1_gender_1")
+
+Qindexing also help in sorting?
+Ans::
+db.users.createIndex({name:1} , {unique:true})) //unique is meaning to same name to not show
+db.user.find({name:"jugal sharma"})
+db.users.dropIndexes("name_1")
+
+
+Q expiresAfterSeconds 3600
+Ans::
+db.collection.createIndex({"name":1} , expiresAfterSeconds:36000)
+
+Qwhay is a covered quary?
+db.users.createIndex({name:1})
+db.users.find({name:"realme" } , {name:1} , {name:1 , _id:0}).explain(executionStats)

@@ -1,0 +1,252 @@
+[{
+    "_id": {
+      "$oid": "6517918a4f599b5c0ef5f01e"
+    },
+    "name": "janad",
+    "price":100,
+    "age": 12,
+ "birthDate": "1996-5-30",
+ "bloodGroup": "AB+",
+ "email": "emily.johnson@x.dummyjson.com",
+    "hobbies": [
+      "travling",
+      "actor"
+    ],
+    "country": "United States",
+    "bio": "I am a actor and travling",
+    "isEligible": false,
+    "gender": "female"
+  },
+  {
+    "_id": {
+      "$oid": "6517918a4f599b5c0ef5f019"
+    },
+    "name": "Anku",
+    "price":200,
+    "country": "France",
+"birthDate": "1989-8-10",
+"bloodGroup": "AB-",
+"email": "michael.williams@x.dummyjson.com",
+    "age": 23,
+    "hobbies": [
+      "Gaming",
+      "Reading"
+    ],
+   
+    "bio": "I am a youtuber and gamer",
+    "isEligible": true,
+    "gender": "male"
+  },
+  {
+    "_id": {
+      "$oid": "6517918a4f599b5c0ef5f020"
+    },
+    "name": "panku",
+    "price":300,
+    "country": "India",
+    "bloodGroup": "A+",
+"email": "sophia.brown@x.dummyjson.com",
+"birthDate": "1982-11-6",
+    "age": 30,
+    "hobbies": [
+      "biking",
+      "Reading"
+    ],
+   
+    "bio": "I am a youtuber and biker",
+    "isEligible": true,
+    "gender": "male"
+  },
+  {
+    "_id": {
+      "$oid": "6517918a4f599b5c0ef5f017"
+    },
+    "name": "jugal",
+    "price":400,
+    "bloodGroup": "A-",
+    "country": "Japan",
+    "email": "james.davis@x.dummyjson.com",
+"birthDate": "1979-5-4",
+    "age": 11,
+    "gender": "female",
+    "hobbies": [
+      "walking",
+      "Reading"
+    ],
+  
+    "bio": "I am a youtuber and actor",
+    "isEligible": false
+
+  },
+  {
+    "_id": {
+      "$oid": "6517918a4f599b5c0ef5f018"
+    },
+    "name": "karan",
+    "price":500,
+    "bloodGroup": "B+",
+    "country": "Israel" , 
+    "birthDate": "1994-6-13",
+    "age": 20,
+"email": "emma.miller@x.dummyjson.com",
+    "hobbies": [
+      "cricket",
+      "Reading"
+    ],
+  
+    "bio": "I am a youtuber and actor",
+    "isEligible": true,
+    "gender": "male"
+  },
+  {
+    "_id": {
+      "$oid": "6517918a4f599b5c0ef5f01a"
+    },
+    "name": "nikhle",
+    "price":600,
+    "bloodGroup": "B-",
+    "country": "Cuba" ,
+    "email": "olivia.wilson@x.dummyjson.com",
+    "birthDate": "2002-4-20",
+    "age": 15,
+    "hobbies": [
+      "biking",
+      "girls"
+    ],
+
+    "bio": "I am a impress the girls that my hobbies",
+    "isEligible": false,
+    "gender": "male"
+  },
+  {
+    "_id": {
+      "$oid": "6517918a4f599b5c0ef5f01b"
+    },
+    "name": "kinka",
+    "price":700,
+    "country": "South Africa", 
+    "bloodGroup": "O+",
+    "email": "alexander.jones@x.dummyjson.com",
+    "birthDate": "1995-6-6",
+    "age": 20,
+    "hobbies": [
+      "computer",
+      "Reading"
+    ],
+  
+    "bio": "I am a youtuber and actor",
+    "isEligible": true,
+    "gender": "male"
+  },
+  {
+    "_id": {
+      "$oid": "6517918a4f599b5c0ef5f01c"
+    },
+    "name": "viren",
+    "price":800,
+    "country": "Thailand " ,
+    "bloodGroup": "O-",
+    "email": "ava.taylor@x.dummyjson.com",
+    "birthDate": "1993-6-10",
+    "age": 19,
+    "hobbies": [
+      "fighting",
+      "Reading"
+    ],
+   
+    "bio": "I am a  figter i am json",
+    "isEligible": true,
+    "gender": "male"
+  },
+  {
+    "_id": {
+      "$oid": "6517918a4f599b5c0ef5f01f"
+    },
+    "name": "amit",
+    "country": "Vietnam", 
+    "price":900,
+    "bloodGroup": "AB+",
+    "email": "ethan.martinez@x.dummyjson.com",
+    "birthDate": "1991-2-12",
+    "age": 25,
+    "hobbies": [
+      "raping",
+      "Reading"
+    ],
+   
+    "bio": "I am a Raping and actor",
+    "isEligible": true,
+    "gender": "male"
+  },
+  {
+    "_id": {
+      "$oid": "6517918a4f599b5c0ef5f01d"
+    },
+    "name": "rahul",
+    "price":1000,
+    "country": "Norway" ,
+    "bloodGroup": "AB-",
+    "email": "isabella.anderson@x.dummyjson.com",
+    "birthDate": "1997-8-25",
+    "age": 11,
+    "hobbies": [
+      "biking",
+      "girls"
+    ],
+  
+    "bio": "I am a youtuber and actor",
+    "isEligible": false,
+    "gender": "female"
+  },
+  {
+    "_id": {
+      "$oid": "6528b478d9cc7ee6fecc75b2"
+    },
+    "name": "Macron",
+    "price":100,
+    "country": "Brunei" , 
+    "bloodGroup": "B+",
+    "email": "liam.garcia@x.dummyjson.com",
+    "birthDate": "1986-10-20",
+    "age": 18,
+    "hobbies": [
+      "gaming",
+      "rapping"
+    ],
+
+    "bio": "I am a YouTuber and biker",
+    "eligible": true,
+    "date": {
+      "$date": "2023-10-13T03:07:36.514Z"
+    },
+    "__v": 0,
+    "gender": "male"
+  },
+
+  {
+    "_id": {
+      "$oid": "6528b478d9cc7ee6fecc75b2"
+    },
+    "name": "Jerry",
+    "price":300,
+    "country": "Delhi" , 
+    "bloodGroup": "O+",
+    "email": "Jerry.jarcia@x.dummyjson.com",
+    "birthDate": "1986-10-20",
+    "age": 18,
+    "hobbies": [
+      "gaming",
+      "rapping"
+    ],
+
+    "bio": "I am a YouTuber and biker",
+    "eligible": false,
+    "date": {
+      "$date": "2023-10-13T03:07:36.514Z"
+    },
+    "__v": 0,
+    "gender": "male"
+  }
+
+
+]
