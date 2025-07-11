@@ -5,6 +5,8 @@ const helmet = require("helmet");
 const session = require('express-session');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
+const githubRoutes = require('./routes/router'); // or './routes/githubRoutes'
+
 require('dotenv').config();
 
 require('./db/conn');
@@ -76,50 +78,11 @@ passport.use(new GitHubStrategy({
 ));
 
 // --- GitHub OAuth Routes ---
-app.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
 
-app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/login/failed' }),
-  function (req, res) {
-    // res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
-      res.redirect('http://localhost:3000/DashboardG'); // Frontend route
-  }
-);
-
-// --- Auth Status Route ---
-
-
-// Get current GitHub user (after login)
-app.get('/login/success', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.status(200).json({
-      success: true,
-      user: req.user,
-      message: "Authenticated ✅"
-    });
-  } else{
-    
-    res.status(401).json({ success: false, message: "Not Authenticated ❌" });
-  }
-});
-
-// --- Login Failed Route ---
-app.get('/login/failed', (req, res) => {
-  res.status(401).json({ message: 'GitHub Login Failed ❌' });
-});
-
-// --- Logout Route ---
-app.get('/logout', (req, res) => {
-  req.logout(err => {
-    if (err) return res.status(500).json({ message: 'Logout error' });
-    req.session.destroy();
-    res.clearCookie('connect.sid');
-    res.redirect(process.env.FRONTEND_URL || '/');
-  });
-});
 
 // --- Custom Routes ---
 app.use(router);
+app.use(githubRoutes);
 
 // --- Server Start ---
 app.listen(PORT, () => {

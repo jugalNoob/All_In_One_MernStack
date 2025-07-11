@@ -3,6 +3,7 @@ const router = new express.Router();
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const { validateSignup } = require("../middleware/validateSignup");
+const githubController = require('../controollers/githubAuthController.js');
 
 
 // ---> RateLimit Your ------------>>
@@ -10,6 +11,20 @@ const { validateSignup } = require("../middleware/validateSignup");
 const RateLimit = require("../middleware/rate"); // Correct import
 
 
+
+// ---> gitHub Login system --------------------------
+
+
+// GitHub OAuth Routes
+router.get('/auth/github', githubController.authWithGitHub);
+router.get('/auth/github/callback', githubController.authGitHubCallback);
+
+// Auth Status
+router.get('/login/success', githubController.loginSuccess);
+router.get('/login/failed', githubController.loginFailed);
+
+// Logout
+router.get('/logout', githubController.logoutUser);
 
 
 // --- > Controolers Planel Folder --------->>
