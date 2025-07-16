@@ -1,0 +1,14 @@
+config:
+  target: "http://localhost:9000"
+  phases:
+    - duration: 60       # Run the test for 60 seconds
+      arrivalRate: 200   # Simulate 200 new users per second (total: 200 * 60 = 12,000)
+  defaults:
+    headers:
+      Content-Type: "application/json"
+
+scenarios:
+  - name: "Pagination Load Test"
+    flow:
+      - get:
+          url: "/search?page={{ $randomInt(1,1000) }}&limit=10"
