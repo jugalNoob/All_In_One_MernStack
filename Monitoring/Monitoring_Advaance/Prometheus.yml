@@ -1,0 +1,59 @@
+# [React Frontend] → [Express API] → [MongoDB]
+#       ↓                ↓               ↓
+#    [Sentry]      [Prometheus]    [MongoDB Exporter]
+#       ↓                ↓               ↓
+#    [ELK Stack] ← [Grafana Dashboard] → [Alertmanager]
+
+# 2. Step-by-Step Setup
+# 2.1 Prometheus + Grafana for Backend Monitoring
+# Create prometheus.yml
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'node-app'
+    static_configs:
+      - targets: ['your-node-app:3000']
+  - job_name: 'mongodb'
+    static_configs:
+      - targets: ['mongodb-exporter:9216']
+
+
+
+
+
+      Node.js Setup with prom-client:
+
+bash
+npm install prom-client
+javascript
+// In your Express app
+const client = require('prom-client');
+const collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics({ timeout: 5000 });
+
+// Add metrics endpoint
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', client.register.contentType);
+  res.end(await client.register.metrics());
+});
+MongoDB Exporter:
+
+bash
+docker run -d --name mongodb-exporter -p 9216:9216 \
+  -e MONGODB_URI=mongodb://your-mongo-uri \
+  bitnami/mongodb-exporter:latest
+2.2 Grafana Dashboard Setup
+Install Grafana:
+
+bash
+docker run -d --name=grafana -p 3000:3000 grafana/grafana
+
+
+Add Prometheus as data source in Grafana (URL: http://prometheus:9090)
+
+Import these dashboards:
+
+Node.js: ID 1860
+
+MongoDB: ID 2583

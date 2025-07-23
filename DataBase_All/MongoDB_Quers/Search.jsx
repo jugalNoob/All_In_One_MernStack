@@ -8,220 +8,191 @@ $jsonSchema: Validates documents against a JSON schema.
 $mod: Performs modulo operation (e.g., multiples of 4).
 $where: Uses JavaScript expressions for custom queries.
 
-1. $regex Operator
-The $regex operator allows you to perform regular expression searches.
 
+
+✅ MongoDB Query Operators: From Beginner to Pro
+🔍 1. Advanced Field Operators
+
+
+| Operator      | Purpose                                                        |
+| ------------- | -------------------------------------------------------------- |
+| `$regex`      | Pattern matching (like `LIKE` in SQL)                          |
+| `$text`       | Full-text search across one or more fields                     |
+| `$expr`       | Use aggregation logic in find queries                          |
+| `$jsonSchema` | Validate documents against a defined JSON schema               |
+| `$mod`        | Match numbers based on modulo condition (e.g., multiples of 4) |
+| `$where`      | Run custom JavaScript logic for advanced filtering             |
+
+
+
+
+🧪 $regex – Regular Expression Search
 js
-Copy code
-// Find documents where the "name" field starts with the letter "A".
-db.users.find({
-  name: { $regex: /^A/ }
-})
-
-
-
-2. $text and $search
-The $text operator is used for full-text search, which can be performed on fields that are indexed with the text index.
+Copy
+Edit
+db.users.find({ name: { $regex: /^A/ } })  // Starts with A
+db.users.find({ name: { $regex: /arma$/ } }) // Ends with "arma"
+db.users.find({ name: { $regex: /ug/, $options: 'i' } }) // Case-insensitive "ug"
+🔎 $text – Full-Text Search
 js
-Copy code
-// Create a text index on the "bio" field.
+Copy
+Edit
 db.users.createIndex({ bio: "text" })
+db.users.find({ $text: { $search: "youtube" } })
+🔥 Note: $text only works on fields with a text index.
 
-// Find documents where the "bio" field contains the word "youtube".
-db.users.find({
-  $text: { $search: "youtube" }
-})
-
-// Another example to find documents in a different collection where the text field contains "youtube".
-db.dataall.find({
-  $text: { $search: "youtube" }
-})
-
-
-
-3. $expr Operator
-The $expr operator allows the use of aggregation expressions within the query language.
-
-// Find documents where the "qty" field is greater than the "price" field.
-db.dataall.find({
-  $expr: { $gt: ["$qty", "$price"] }
-})
-
-
-4. $jsonSchema Operator
-The $jsonSchema operator validates documents against a JSON Schema.
-
+🧠 $expr – Use Aggregation Logic in Queries
 js
-Copy code
-// Find documents where the "name" is a string and "age" is a number.
+Copy
+Edit
+db.dataall.find({ $expr: { $gt: ["$qty", "$price"] } }) // qty > price
+db.products.find({ $expr: { $eq: ["$status", "$review"] } }) // status == review
+📜 $jsonSchema – Schema Validation
+js
+Copy
+Edit
 db.users.find({
   $jsonSchema: {
     bsonType: "object",
     required: ["name", "age"],
     properties: {
-      name: {
-        bsonType: "string"
-      },
-      age: {
-        bsonType: "int"
-      }
+      name: { bsonType: "string" },
+      age: { bsonType: "int" }
     }
   }
 })
+🧮 $mod – Modulo Matching
+
+db.dataall.find({ qty: { $mod: [4, 0] } }) // qty % 4 == 0
+db.users.find({ age: { $mod: [2, 1] } })   // odd numbers only
 
 
-5. $mod Operator
-The $mod operator is used to perform modulo operation on a field’s value.
+🧑‍💻 $where – JavaScript Logic (⚠️ Slower)
 
-js
-Copy code
-// Find documents where the "qty" field divided by 4 leaves a remainder of 0 (i.e., multiples of 4).
-db.dataall.find({
-  qty: { $mod: [4, 0] }
-})
-
-
-6. $where Operator
-The $where operator allows you to use JavaScript expressions to query documents.
-
-js
-Copy code
-// Find documents where the "qty" field is greater than the "price" field using JavaScript.
 db.dataall.find({
   $where: function() {
     return this.qty > this.price;
   }
 })
+⚠️ Avoid in production unless absolutely needed — runs JS on server.
+
+🧺 2. Querying Arrays in MongoDB
 
 
+| Operator     | Purpose                                                         |
+| ------------ | --------------------------------------------------------------- |
+| `$size`      | Match arrays with exact number of elements                      |
+| `$all`       | Match if all specified values exist in the array                |
+| `$in`        | Match if **any** value from list exists in array                |
+| `$elemMatch` | Match if a **single array element** matches multiple conditions |
 
 
-
-
-..$regex is regular 
-
-db.users.find({name:{$regex:/^A/}}) // check start letter A 
-
-
-...$search
-// ^ means first character of name
-db.users.createIndex({bio:"text"}) // first create
-db.users.find({$text:{$search:"youtube"}}) // second use This
-
-db.dataall.find({ $text: { $search: "youtube" } })
-
-
-
-Q from Beginner to pro: Querying Array in MongoDb ? ..............................>>
-
-$size
-$all
-$in
-$elemMatch 
-
-1. $size Operator
-The $size operator matches documents where an array field has a specific number of elements.
-
+📏 $size – Exact Array Length
 js
-Copy code
-// Find one document where the "experience" array has exactly 3 elements.
-db.dataall.findOne({
-  experience: { $size: 3 }
-})
-
-
-2. $all Operator
-The $all operator matches documents where an array field contains all the specified elements.
-
+Copy
+Edit
+db.users.find({ skills: { $size: 5 } })
+db.dataall.find({ experience: { $size: 3 } })
+📋 $all – Must Contain All Values
 js
-Copy code
-// Find students who have both "jugal" and "sharma" in their "hobbies" array.
-db.students.find({
-  hobbies: { $all: ['jugal', 'sharma'] }
-})
+Copy
+Edit
+db.students.find({ hobbies: { $all: ["jugal", "sharma"] } }) // both required
+📌 $in – Any Value Match
 
 
-3. $in Operator
-The $in operator matches documents where a field’s value is in a specified array.
-
-js
-Copy code
-// Find students who have either "jugal" or "sharma" in their "hobbies" array.
-db.students.find({
-  hobbies: { $in: ['jugal', 'sharma'] }
-})
+db.students.find({ hobbies: { $in: ["jugal", "sharma"] } }) // any one
+🧩 $elemMatch – Match One Array Element with Multiple Conditions
 
 
-4. $elemMatch Operator
-The $elemMatch operator is used when you need to match one or more conditions on the same element of an array.
-
-js
-Copy code
-// Find documents where the "experience" array contains an object with the company "Amazon" and the role "Engineer".
-db.dataall.find({
-  experience: { 
-    $elemMatch: { 
-      company: "Amazon", 
-      role: "Engineer" 
-    }
-  }
-})
-
-
-$size:
-
-js
-Copy code
-// Find one document where the "skills" array has exactly 5 elements.
-db.users.findOne({
-  skills: { $size: 5 }
-})
-$all:
-
-js
-Copy code
-// Find students who have all the specified courses in their "courses" array.
-db.students.find({
-  courses: { $all: ['math', 'science'] }
-})
-$in:
-
-js
-Copy code
-// Find documents where the "tags" array contains either "tech" or "sports".
-db.articles.find({
-  tags: { $in: ['tech', 'sports'] }
-})
-$elemMatch:
-
-js
-Copy code
-// Find users where one of the "projects" they worked on has a "duration" of more than 12 months and the "role" is "Manager".
 db.users.find({
-  projects: { 
-    $elemMatch: { 
-      duration: { $gt: 12 }, 
-      role: "Manager" 
+  projects: {
+    $elemMatch: {
+      duration: { $gt: 12 },
+      role: "Manager"
     }
   }
 })
 
+db.dataall.find({
+  experience: {
+    $elemMatch: {
+      company: "Amazon",
+      role: "Engineer"
+    }
+  }
+})
+💡 Bonus: Querying Nested Fields in Arrays
+
+db.dataall.find({ "experience.company": "Amazon" }) // Match nested object field
+db.students.find({ "hobbies.0": "jugal" })          // First element of array
+🧠 Summary Table: When to Use Which
+
+
+| ✅ **Operator** | 💡 **When to Use**                                 |
+| -------------- | -------------------------------------------------- |
+| `$regex`       | Partial string match (e.g., name starts with "A")  |
+| `$text`        | Full-text search across fields                     |
+| `$expr`        | Compare two fields dynamically                     |
+| `$jsonSchema`  | Validate structure and types of documents          |
+| `$mod`         | Multiples, parity checks (even/odd)                |
+| `$where`       | Custom JS condition (less performant)              |
+| `$size`        | Exact number of array elements                     |
+| `$all`         | All values must exist in array                     |
+| `$in`          | Any value match from array                         |
+| `$elemMatch`   | One array element must satisfy multiple conditions |
 
 
 
-db.dataall.findOne({"experience.company":"Amazon"}
-db.dataall.findOne({experience:{$size:3}}) // how user experience work in company and check size
-
-...$all
-db.students.find({hobbies: {$all:['jugal','sharma']}}) // all meaning is jugal sharma both is true
-
-..$in 
-db.students.find({hobbies: {$in:['jugal','sharma']}}) // all meaning is jugal sharma both is not  true
+🔧 Optional Additions You Can Explore Later
 
 
-Summary of Operators:
-$size: Matches arrays with a specific number of elements.
-$all: Matches arrays containing all specified elements.
-$in: Matches if any of the specified elements are present in the field.
-$elemMatch: Matches if a single element in an array satisfies multiple conditions.
+| Feature       | Description                                           |
+| ------------- | ----------------------------------------------------- |
+| `$not`        | Negate condition (e.g., not equal, not in array)      |
+| `$exists`     | Check if a field exists                               |
+| `$type`       | Check data type of a field (e.g., string, array, int) |
+| `$bitsAllSet` | Bitwise operation (useful for flags)                  |
 
+
+| 🧩 **Feature** | 📝 **Description**                                     | 💻 **MongoDB Shell Command Example**                                                       |
+| -------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `$not`         | Negates a condition (like NOT in SQL)                  | `db.users.find({ age: { $not: { $gt: 30 } } })` – Age NOT greater than 30                  |
+| `$exists`      | Checks if a field exists or not                        | `db.users.find({ middleName: { $exists: false } })` – Field does NOT exist                 |
+| `$type`        | Matches fields with specific BSON type                 | `db.users.find({ age: { $type: "int" } })` – Field is of type int                          |
+| `$bitsAllSet`  | Bitwise match where **all bits** in a mask must be set | `db.flags.find({ permissions: { $bitsAllSet: 6 } })` – Bits 2 and 1 are set (binary `110`) |
+
+
+
+
+📘 Explanation Examples:
+🔄 $not
+js
+Copy
+Edit
+// Find users NOT aged above 30
+db.users.find({ age: { $not: { $gt: 30 } } })
+🧩 $exists
+js
+Copy
+Edit
+// Find documents that DO NOT have the "middleName" field
+db.users.find({ middleName: { $exists: false } })
+📂 $type
+js
+Copy
+Edit
+// Find where the field "age" is an integer
+db.users.find({ age: { $type: "int" } })
+
+// Use BSON numbers too
+// 2 = string, 3 = object, 4 = array, 16 = int32, 18 = int64
+db.users.find({ skills: { $type: 4 } }) // Field is an array
+🧠 $bitsAllSet
+js
+Copy
+Edit
+// Bit mask: find docs where permissions has BOTH bit 2 and 1 set
+// 6 = 110 (bit 2 and 1)
+db.flags.find({ permissions: { $bitsAllSet: 6 } })
+Useful for systems with binary flags, like user permissions or settings.

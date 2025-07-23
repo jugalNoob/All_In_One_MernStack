@@ -1,12 +1,3 @@
-app.use((req, res, next) => {
-    const start = Date.now();
-    res.on("finish", () => {
-        const latency = Date.now() - start;
-        console.log(`[${req.method}] ${req.originalUrl} - ${latency}ms`);
-    });
-    next();
-});
-
 
 
 // const express = require("express");

@@ -1,0 +1,20 @@
+# Use a slim base image to reduce build time
+FROM node:21-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy only package.json and package-lock.json first (improves caching)
+COPY package.json package-lock.json ./
+
+# Install dependencies using `ci` for faster, production-ready installs
+RUN npm ci --only=production
+
+# Copy the entire app after installing dependencies
+COPY . .
+
+# Expose port 3000
+EXPOSE 3000
+
+# Start the application
+CMD ["npm", "start"]

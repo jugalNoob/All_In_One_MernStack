@@ -1,0 +1,569 @@
+
+|||||||||||||| --------------- >>> docker new command --------------------- <<<<<<<<<<<<<<<<<<
+
+
+// very important informatiojn  ////// ---------
+// /Users/sjuga/Documents/All_Programming/docker:/app base-app
+// docker run --name react -p 3000:3000 --rm -v C:\Users\sjuga\Documents\All_Programming\docker:/app my-react-app  --> update your code
+
+docker build -t my-react-app /Users/sjuga/Documents/All_Programming/docker
+
+
+
+
+
+::::::: Upload Loadimage in docker ::::::::::::::::::::
+
+
+1:::https://hub.docker.com/repository/docker/allwegood/myapp/tags
+
+
+docker tag react myuser/myapp:latest 
+
+docker login 
+
+docker push allwegood/myapp:latest
+
+docker pull allwegood/myapp:latest
+
+
+
+
+||||||||||| --- >< docker strat command  
+
+docker run hello-world -- > 
+
+docker images --> 
+///////////
+Create a docker image in react.js
+
+1::docker build -t react .
+2::docker image ls
+3::docker images --> check image
+3:: docker run   22a56065e5c2   --> image id 
+4:: docker ps --> check runing containner
+5::docker stop beautiful_morse  --> stop docker 
+6::docker run -d -p 3000:3000 22a56065e5c2 -->outer to containner
+7::docker run -d -p 3001:3000 22a56065e5c2 --> multiple containner
+8::docker run -d -p 3002:3000 22a56065e5c2 --> multiple containner
+9::docker ps -a --> all show
+10::docker rm {name} -->delet containner 
+11::docker run -d --rm  --name  -p 3000:3000 22a56065e5c2  --> but you stop your containner automated remove
+12::docker run -d   --name  "myweapapp" -p 3000:3000 22a56065e5c2  -->container name
+13::docker rmi   22a56065e5c2  -->delet image
+14::docker build -t myname . --> image t mean tage your image
+15::
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------
+
+
+https://hub.docker.com/ --> 
+
+docker run python --> 
+
+docker build -t pythons . ----> python
+
+
+docker run --name py pythons --->  python 
+
+docker run --name rac -p 3000:3000 racts   --> react 
+docker build -t pythons . --> react 
+
+docker ps -a --> all containers
+
+
+
+
+
+ /////and MERN 
+
+ DockerFile
+
+ docker-compose.ylm
+
+ docker-compose build
+
+  docker-compose up -d
+
+ docker-compose down
+
+docker rm -f $(docker ps -a -q) -->all container delete 
+
+docker rmi $(docker images -a -q) --> all imgaes delte
+
+
+docker volume prune --all voulme  delete 
+
+
+
+
+Docker Basic Commands
+
+1::Docker info
+
+2::docker version
+
+3::docker login
+
+4::docker logout
+
+5::docker help
+
+
+
+Docker  Images
+
+1::docker images --> check images
+
+2::docker rmi -f  --> delete image
+
+
+3::docker pull <imagename>--> mean docker hub
+
+4::docker run <imagename> --> 
+
+5::docker run -it -d --name reactAppi -p 3000:3000 reactapp
+
+6::docker tag <image-name>  //> 
+
+7::docker push <image-tag-name> storge  docker to resgister 
+
+8::docker history --> check history
+
+9::docker inspect --> low level information
+
+10::docker image prune --> delete all 
+
+
+Part:::3 |||||||||||||||Docker Container  command
+
+1::docker ps
+
+2::docker ps -a -->check all status
+
+3::docker stop <name> --> 
+
+4::docker start
+
+5::docker restart
+
+6::docker rm <container id>
+
+7::docker log <container-id> -->Fetch the logs of a container: 
+
+8::docker exec -t <container-id> /bin/bash
+
+9::docker inspect <conatiner-id>
+
+10::docker export contaniner <save log file>
+
+11:::docker kill -->Kill one or more running containers: docker kill
+
+12:: docker inspect <container-id> -->Display detailed information on one or more containers: 
+
+13::docker pause <container-id>  -->>Pause all processes within one or more containers: 
+
+14::docker container prune
+
+15::docker unpause
+
+16::docker restart 
+
+17::docker rename
+
+18::docker start 
+
+19::docker stop
+
+20::docker stats
+
+Part:::4 Docker Network Command ||||||||||||||||||||||||||||||||||
+
+1::docker network ls --> all list network
+
+2::docker netwrok create <network-name>  -->  Create a network
+
+3::docker newtwok rm <network-name> -->  Remove one or more networks
+
+4::docker netwroke inspect  --> Display detailed information on one or more networks
+
+5::docker netwrok prune  -->  prune       Remove all unused networks
+
+6::docker network disconnect --> Disconnect a container from a network
+
+7::docker newtwok  connect --> Connect a container to a network
+
+
+part::5::Docker Volumes Command|||||||||||||||||||||||||||||
+
+1::docker volume ls
+
+2::docker volume create <vol-name>
+
+3::docker volume inspect <vol-name>
+
+4::docker volume rm <vol-name>
+
+5::docker system  prune --volumes
+
+part:::6:::Docker Compose command :::::::::
+
+1::docker-compose  --version
+
+2::docker-compose up -d
+
+3::docker-compose down -->  Stop and remove containers, networks
+
+4::docker-compose ps -->List containers
+
+5::docker-compose images
+
+6::docker-compose stop
+
+7::docker-compose start
+
+8::docker-compose restart --> Restart service containers
+
+9::docker-compose   pause --> 
+
+10::docker-compose   unpause 
+
+
+Part::::::::::::::::::6  Docker Swarm Command -- 
+
+sudo docker swarm init
+
+sudo docker swarm join-token worker
+
+sudo docker swarm join --token <token>
+
+sudo docker swarm leave
+
+sudo docker service rm
+
+sudo docker service ls
+
+sudo docker service sacle <service-name>=resplica
+
+sudo docker service --name <service-name> -p 8080:8080 <image-name>
+
+
+
+
+
+
+
+
+
+Docker 
+
+
+
+
+|||||||||||||||||||||what is  Docker|||||||||||||||||||||||||||||||||||||||||||||||||| 
+
+Docker is a platform designed to make it easier to create, deploy, and run applications using 
+containers. Containers allow developers to package an application and its dependencies into a 
+standardized unit that can run on any infrastructure. Docker provides a way to build, ship, and 
+run these containers consistently across different environments, whether it's a developer's
+laptop, a testing environment, or a production server. 1:::With Docker, developers can easily share applications as container images,
+
+
+
+
+2://///:What is Docker Hub
+
+::Image Hosting
+
+::Collaboration and Sharing: 
+
+::Automated Builds: Docker Hub integrates with version control systems like GitHub or Bitbucket, 
+allowing users to set up automated builds triggered by code commits. This means that when changes 
+are made to the linked code repository, Docker Hub automatically builds
+and updates the associated container image.
+
+Docker Basic Commands
+Docker, a popular containerization platform, provides tools and a platform for building, distributing, 
+and running containers. It simplifies the process of creating, deploying
+
+
+
+3::::::////Docker Network
+
+::Types of newtork Drivers
+
+..Bridge 
+..Host
+..overlay
+..Ipvlan
+..Macvlan
+..None
+
+
+4:::::Docker Compose :::::::::::
+Docker Compose is a tool provided by Docker that simplifies the process of defining and running 
+multi-container Docker applications. It allows you to use a YAML file to configure the services
+(containers) needed for an application, 
+making it easier to manage complex setups.
+
+
+
+5:::::what is  Docker Swarm :::::::::::-
+
+
+Docker Swarm is Docker's native clustering and orchestration tool used for managing a cluster
+of Docker hosts. It allows you to create and manage 
+a group of Docker hosts as a single virtual system.
+
+
+With Docker Swarm, multiple Docker engines (or nodes) are joined together to form a cluster,
+enabling high availability, scalability, and ease of management for containerized 
+applications. Swarm follows a manager-worker node architecture:
+
+
+6::::::What is  Docker Volumen
+
+In Docker, a volume is a way to persist data generated by and used by Docker containers.
+Volumes are designed to store and manage persistent data separately from the container itself, 
+ensuring that the data survives even 
+if the container is stopped or removed.
+
+
+Q what is GitHub ??????
+Ans::
+
+
+GitHub is a web-based platform and service that is primarily used for version control
+using Git. It provides a collaborative environment for developers to work on projects, share code,
+track changes, and collaborate with others.
+
+
+::Version Control:
+
+::Code Hosting:
+
+::Collaboration Tools
+
+::Continuous Integration/Continuous Deployment (CI/CD): GitHub integrates with various CI/CD tools, enabling automated testing and deployment workflows
+when code changes are pushed to repositories.
+
+GitHub has become a central platform for software development, especially within the open
+source community, offering a wide range of features that support collaboration, code management,
+and project organization. It's widely used by individual developers, teams, and organizations
+to build and maintain software projects of all sizes.
+
+
+
+|||||||||With code Docker |||||||||||||||||||
+
+DockerFile.dev //use only this 
+
+docker rmi -f express
+docker build -f Dockerfile.dev -t express .
+
+docker run -it -d --name expressapp -p 9000:9000  express
+
+docker run -p 9001:9000 myapp
+ docker run -it -d --name reactApp  -p 9000:9000 -v ${PWD}:/app express
+
+
+1::docker login
+
+
+2::docker hub push the image|||||||||||||
+
+3::docker  tag reactcrypto docker786123/reactcrypto
+
+
+4::docker push  docker786123/reactcrypto
+
+
+
+
+ /////and MERN 
+
+ DockerFile
+
+ docker-compose.ylm
+
+ docker-compose build
+
+  docker-compose up -d
+
+ docker-compose down
+
+docker rm -f $(docker ps -a -q) -->all container delete 
+
+docker rmi $(docker images -a -q) --> all imgaes delte
+
+
+docker volume prune --all voulme  delete 
+
+
+
+
+Docker Basic Commands
+
+1::Docker info
+
+2::docker version
+
+3::docker login
+
+4::docker logout
+
+5::docker help
+
+
+
+Docker  Images
+
+1::docker images --> check images
+
+2::docker rmi -f  --> delete image
+
+
+3::docker pull <imagename>--> mean docker hub
+
+4::docker run <imagename> --> 
+
+5::docker run -it -d --name reactAppi -p 3000:3000 reactapp
+
+6::docker tag <image-name>  //> 
+
+7::docker push <image-tag-name> storge  docker to resgister 
+
+8::docker history --> check history
+
+9::docker inspect --> low level information
+
+10::docker image prune --> delete all 
+
+
+Part:::3 |||||||||||||||Docker Container  command
+
+1::docker ps
+
+2::docker ps -a -->check all status
+
+3::docker stop <name> --> 
+
+4::docker start
+
+5::docker restart
+
+6::docker rm <container id>
+
+7::docker log <container-id> -->Fetch the logs of a container: 
+
+8::docker exec -t <container-id> /bin/bash
+
+9::docker inspect <conatiner-id>
+
+10::docker export contaniner <save log file>
+
+11:::docker kill -->Kill one or more running containers: docker kill
+
+12:: docker inspect <container-id> -->Display detailed information on one or more containers: 
+
+13::docker pause <container-id>  -->>Pause all processes within one or more containers: 
+
+14::docker container prune
+
+15::docker unpause
+
+16::docker restart 
+
+17::docker rename
+
+18::docker start 
+
+19::docker stop
+
+20::docker stats
+
+Part:::4 Docker Network Command ||||||||||||||||||||||||||||||||||
+
+1::docker network ls --> all list network
+
+2::docker netwrok create <network-name>  -->  Create a network
+
+3::docker newtwok rm <network-name> -->  Remove one or more networks
+
+4::docker netwroke inspect  --> Display detailed information on one or more networks
+
+5::docker netwrok prune  -->  prune       Remove all unused networks
+
+6::docker network disconnect --> Disconnect a container from a network
+
+7::docker newtwok  connect --> Connect a container to a network
+
+
+part::5::Docker Volumes Command|||||||||||||||||||||||||||||
+
+1::docker volume ls
+
+2::docker volume create <vol-name>
+
+3::docker volume inspect <vol-name>
+
+4::docker volume rm <vol-name>
+
+5::docker system  prune --volumes
+
+part:::6:::Docker Compose command :::::::::
+
+1::docker-compose  --version
+
+2::docker-compose up -d
+
+3::docker-compose down -->  Stop and remove containers, networks
+
+4::docker-compose ps -->List containers
+
+5::docker-compose images
+
+6::docker-compose stop
+
+7::docker-compose start
+
+8::docker-compose restart --> Restart service containers
+
+9::docker-compose   pause --> 
+
+10::docker-compose   unpause 
+
+
+Part::::::::::::::::::6  Docker Swarm Command -- 
+
+sudo docker swarm init
+
+sudo docker swarm join-token worker
+
+sudo docker swarm join --token <token>
+
+sudo docker swarm leave
+
+sudo docker service rm
+
+sudo docker service ls
+
+sudo docker service sacle <service-name>=resplica
+
+sudo docker service --name <service-name> -p 8080:8080 <image-name>
+
+
+
+
+
+
+
+
+
+Docker 

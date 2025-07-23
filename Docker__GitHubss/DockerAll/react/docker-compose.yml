@@ -1,0 +1,26 @@
+# first row class start work and automatic 
+
+# services:
+#   frontend:
+#     build: ./reacts
+#     container_name: basic-container
+#     ports:
+#       - "3000:3000"
+#     volumes:
+#       - ./reacts:/app
+#     working_dir: /app
+
+#     # command: ["npm", "start"]
+
+services:
+  frontend:
+    build: 
+      context: ./reacts
+      dockerfile: Dockerfile
+    container_name: basic-container
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./reacts:/app
+      - /app/node_modules  # Prevents overwriting node_modules inside the container
+    working_dir: /app

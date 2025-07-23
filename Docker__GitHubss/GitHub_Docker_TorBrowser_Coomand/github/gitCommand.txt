@@ -1,0 +1,481 @@
+::::::::::::::::: Git 2.0  ::::::::::::::::::   :::::::::::::::: :::::::::::::::
+
+1::Git init -- 
+
+2::git status  --> check  status
+
+3::git add . --> all file addda
+
+4::git add py.py --> single file data
+
+5::Git log --> check comments
+Author: jugalNoob <sjugal126@gmail.com>
+Date:   Sat Apr 27 21:12:05 2024 -0700
+
+
+6::git branch --> check branch      ---------------<><><>
+
+7::git diff -->check which code change in your file
+
+8::git diff -->check chnages
+
+8:: git show  14bc23426dc392c6682a5160fb22653041f10e75:py.py --> Important
+
+9::git checkout  14bc23426dc392c6682a5160fb22653041f10e75 --py.py
+
+10::Git checkout 14bc23426dc392c6682a5160fb22653041f10e75 --*
+
+11::git checkout master -- * --> all 
+
+12::git checkout master -- inidex.py
+
+
+:::::: Git Amend ------>
+Amend the Commit:
+Once your changes are staged, use git commit --amend to incorporate them into the previous commit.
+
+git commit --amend
+
+git push --force
+
+
+
+
+:::::::::::::: Git Negative  case --> measing add code bad 
+1::If we made any Change by mistake and save it
+Case1:: To Undo Change , get the Last SuccessFuLL Change 
+
+git restore . --> all remove code 
+git restore py.py --> 
+
+2::Case2 if we added the change  using  git add the
+git restore --staged index.html
+git restore  --staged . --> all 
+
+
+3::Case Added Change to staging area (didn't commit) after this added more 
+changes to file
+::to get the Staged Change 
+git restore --worktree index.html
+
+4::case : how about if we did commit also wrong file
+
+git reset --soft HEAD^(uncommit and keep the chnage )
+git reset --hard HEAD^(uncommit and discard the chnage)
+
+
+:::::::::::::: Logging in Git :::::::::::::
+1::git log #
+2::git log -p -2 (last two Commit with diff)
+3::git log --stat (summary of Chnages) all shwo changes
+4::git log --pretty=online
+5::git log -S 'h1'
+6::git log --pretty=format:'%h - %an , %ar:%s'
+
+
+|::::::::: Remote Repo  meaing cloud  github 
+
+::::  Push User Project in Hub
+1:--:GitHub cloud Upload your Project 
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/jugalNoob/PythonOne.git
+git push -u origin main
+
+
+1::git remote  -->check link your Hub
+2::git remote -v -->
+3::git pull -->You create a new File in github and then use command -->git pull
+4::ls -->check File name information
+
+
+::::: ---Branching and Merging 
+----create a brach and add 
+1::git branch html v-->create a branch
+2::git checkout html -->switching your master to html
+3::git add .
+4::git commit  -m ""
+5::git merge desgin --> merge your File
+6::git push origin html --> 
+
+
+::: what is merge conflict 
+1::
+
+
+::::::::::::::::: ::::::::::::::::::::::::::::::   :::::::::::::::::::::  ::::::::::::::::::::::
+
+ what is git?
+Ans::Git is a free and open source distributed version control system
+designed to handle everything from small to very large project with
+speed and  efficiencyq
+
+2::Mangae small project and large size project
+
+3::version control is a sustem that recored changes to file or set
+of files over time so that you can recall specific versions later
+
+..local version control system
+..centralized version control system
+..distributed version control system --> gitHub
+
+
+
+Ans:small project can be done by github,large project can be done by bitbucket.
+
+
+1::Command First simplaes
+echo "# PythonFile" >> README.md
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/jugalNoob/PythonFile.git
+git push -u origin main
+
+////Start Command ////
+
+pwd --> this command check file loacl 
+
+git config user.name "jugalNoob" -->set your name
+git config user.email  "sjugal126@gmail" --> set your name
+
+
+git config --global user.name ""
+
+git config --global user.email
+
+git config --list -->check all user information
+
+git init -->create folder add all information
+
+git status -->check file status
+
+git log  -->check status and check commint
+
+git rm <file_name> -->remove File
+
+////|||Three -- stage -- architecture |||///||||
+
+1::working directory 
+
+2::staging  are
+
+3::git directory (Repository)
+
+
+
+||||||||||GitClone Folder |||||||||
+git clone https://github.com/jugalNoob/PythonFile.git -->clone your website
+
+git clone https://github.com/user/repo.git my-local-directory
+
+ls -->check files
+
+clear
+
+git commit -m "PythonFile"
+
+
+|||||||Git gitignore ||||||||||||||||||
+
+.gitignore
+
+# This is a comment, Git will ignore it
+
+demo/ -->folder ignore
+
+
+
+|||||||||||File status File Cycle GIt|||||||||||||||||||||
+
+Here's how the commands you mentioned relate to these statuses:
+
+git init:::: Initializes a new Git repository in the current directory.
+ Initially, all files are untracked.
+
+git status:::: Shows you the status of files in your repository,
+ including untracked, modified, staged, and committed files.
+
+git add:::: Stages modifications made to a file, changing its 
+status from modified to staged.
+
+git commit:::: Records the staged changes, changing the status of those
+ files to committed.
+
+
+
+
+|||||||||||||||||Commits  staging area & working directory difference||||||||||||
+
+
+git diff
+
+git diff --staged -->changes in git show  all changes
+git add py.py // single file 
+
+git restore --staged py.py  --> command  convert to modified
+
+
+git restore py.py -->restore your code 
+
+
+git checkpout -f  --> restore your add in your file
+
+git checkpout file.txt -->single file 
+
+
+||||||||||||Renaming and Moving  Files in Git||||||||||||
+
+git mv py.py jugal.py --chnages Your file file_name
+
+git rm jugal.py --> remove files
+
+git push origin <branch_name> -->Update 
+
+git rm --cached jugal.py -->remove file 
+
+touch newfile.txt --> linux command
+
+echo.>newfile.txt
+
+git push origin <branch_name>
+
+
+
+||||||||||||||Working on Reopitory Remotely||||||||||||||||||||||
+
+git remote add origin https://github.com/jugal-chanda/python_practice.git
+
+//Update Files 
+
+git commit -m "first commit" 
+
+git push origin main
+
+
+
+||||||||||||||Crate and Margin Branches  in GIT|||||||||||||||||
+
+
+git checkout -b Deva --> branche master to  converet  Deva
+
+git commint -m "jugal"
+
+git branch  --> check which 
+
+git  checkout master -->switch to devea to master
+
+git push origin Deva
+
+
+||||||||||||||||||Branching And merging a project |||||||||||||||||
+
+git checkout  master--> first go master
+
+git merge Deva -->merge in master
+
+git pull origin master
+
+
+
+
+Basic Commands:  -----------------------<><><><><>
+
+git init: Initialize a new Git repository.
+git clone: Clone a repository into a new directory.
+git add: Stage changes for the next commit.
+git commit: Record changes to the repository.
+git push: Push local commits to a remote repository.
+git pull: Fetch from and integrate with another repository or a local branch.
+git status: Show the working tree status.
+Branching and Merging:
+
+git branch: List, create, or delete branches.          -----------------------<><><><>
+git checkout: Switch branches or restore working tree files.
+git merge: Join two or more development histories together.
+git rebase: Reapply commits on top of another base tip.
+git cherry-pick: Apply changes introduced by some existing commits.
+Remote Repositories:
+
+Remote Repositories: ----------------------------<><><><>
+git remote: Manage set of tracked repositories.
+git fetch: Download objects and refs from another repository.
+git remote add: Add a remote repository.
+git remote -v: List remote repositories.
+
+
+Undoing Changes:-0----------------<><><>
+git reset: Reset current HEAD to the specified state.
+git revert: Revert some existing commits.
+git checkout -- <file>: Discard changes in the working directory.
+Advanced Topics:
+
+Advanced Topics: -------------<><><>
+git stash: Stash changes in a dirty working directory away.
+git bisect: Use binary search to find the commit that introduced a bug.
+git submodule: Initialize, update or inspect submodules.
+Configuration and Information:
+
+Configuration and Information: --------------<><><>
+git config: Get and set repository or global options.
+git log: Show commit logs.
+git diff: Show changes between commits, commit and working tree, etc.
+Collaboration:
+
+
+Forking a repository on GitHub/GitLab.
+Pull requests (PRs): Sending and reviewing code changes.
+Code reviews: Providing feedback on others' code changes.
+Handling merge conflicts: Resolving conflicts that occur when merging branches.
+
+
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::: 2.0  Information :::::::::::::
+
+
+It looks like you've outlined a very comprehensive guide to using Git, covering a wide range of commands and scenarios from initialization, managing commits, branches, merging, undoing changes, and working with remote repositories like GitHub.
+
+Here’s a summary of key sections from your guide, which may help in organizing the content:
+
+Basic Git Commands:
+git init: Initialize a Git repository.
+git add: Stage changes for commit.
+git commit -m "message": Commit changes with a message.
+git status: Check the status of files (staged, unstaged).
+
+
+git log: Show commit history.
+git diff: Show changes between commits or the working tree.
+git restore: Discard changes in the working directory or staging area.
+
+
+Branching and Merging:
+git branch <branch>: Create a new branch.
+git checkout <branch>: Switch to a different branch.
+git merge <branch>: Merge a branch into the current branch.
+git push origin <branch>: Push branch changes to a remote repository.
+
+
+Undoing Changes:
+git restore .: Undo changes in all files.
+git reset --soft HEAD^: Undo the last commit but keep changes.
+git reset --hard HEAD^: Undo the last commit and discard changes.
+
+
+Working with Remote Repositories:
+git remote add origin <url>: Link a local repository to a remote.
+git push -u origin main: Push the main branch to the remote repository.
+git pull: Pull changes from a remote repository.
+
+
+Logging and Debugging:
+git log -p: Show detailed commit logs including diffs.
+git log --stat: Show commit summary with file changes.
+git blame <file>: See who modified each line of a file.
+
+
+Git Configurations:
+git config --global user.name "Name": Set the global username for commits.
+git config --global user.email "email": Set the global email for commits.
+
+
+
+
+Ans: hi i am jugal sharma
+
+
+Q what is a version control System?
+
+version control also know as source control
+is tracking and managing software code change
+
+::Famous (VSc)
+
+.git (Most famous)
+.apache subVersion
+.Piper (Used by google)
+
+
+Q What is Git?
+..Installation of Git CLI
+..Basic Git Commands
+..Setting up Git Global Configuration
+
+     
+
+Q how to add your email and name in github?
+
+...git config --global user.name “[firstname lastname]”
+
+...git config --global user.email “[valid-email]”
+
+...git config --global color.ui auto
+
+
+
+Q what is SetUp or INT  And  Stages or snapShot?
+
+...git init 
+
+...git clone [url0]
+
+...git status
+
+...ls -la
+
+...git add .
+
+...git add py.py
+
+...git diff (check which line add in your code)
+
+... git diff --staged ( all show )
+
+...git rm py.py (remove your file )
+
+...git commit -m "First commit"
+
+...git log (check commit history)
+
+...git log --oneline (line one of code show)
+
+
+..git show 92a3139 (add hash  and then your check your all chnage in git hub with commit history)
+
+...git blame pyth.py (check which user change your file )
+
+...git reset --hard hash (change your head in commit )
+
+...ls
+
+....git mv py.py jugal.py  --changes Your file name
+
+
+...git branch (check your branch name)
+
+...git branch -M main (add a name like main)
+
+Q Update Your GitHub ? ------------------------------------------>
+
+git branch -M main
+git remote add origin https://github.com/jugalNoob/NewGitHub.git
+git push -u origin main
+
+
+Prefect way  ---------> 
+
+git status
+git add . 
+git commit -m 
+git push
+
+
+
+
+Q How to gen your SSH ?
+Private 
+
+public

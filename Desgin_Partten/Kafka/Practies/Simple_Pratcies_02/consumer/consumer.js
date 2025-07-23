@@ -1,48 +1,37 @@
-const kafka = require("../client/client") // Import Kafka client
+const kafka = require("../client/client");
+const connectDB = require("../db/conn");
+
 
 async function initConsumer() {
-  const consumer = kafka.consumer({ groupId: "user-1" });
+  const consumer = kafka.consumer({ groupId: "user-signUp-group" });
 
   try {
-    console.log("Connecting Kafka Consumer...");
+    console.log("🔄 Connecting Kafka Consumer...");
     await consumer.connect();
-    console.log("Consumer connected successfully");
+    console.log("✅ Consumer connected successfully");
 
-    await consumer.subscribe({ topic: "UserRestapi", fromBeginning: true });
+    await consumer.subscribe({ topic: "signUp_user", fromBeginning: true });
+    console.log("✅ Subscribed to topic 'signUp_user'");
 
-    console.log("Started consuming messages...");
     await consumer.run({
-      eachMessage: async ({ topic, partition, message }) => {
+      eachMessage: async ({ message }) => {
         try {
-          console.log(
-            `Received message from ${topic} [PART: ${partition}] at offset ${message.offset}: ${message.value.toString()}`
-          );
+          const userData = JSON.parse(message.value.toString());
+          console.log(`📥 Received message: ${JSON.stringify(userData)}`);
+
+
         } catch (err) {
-          console.error("Error processing message:", err);
+          console.error("❌ Error processing message:", err.message);
         }
       },
     });
 
-    // Handle graceful shutdown
-    process.on("SIGINT", async () => {
-      console.log("Shutting down consumer...");
-      await consumer.disconnect();
-      console.log("Consumer disconnected");
-      process.exit(0);
-    });
-
-    process.on("SIGTERM", async () => {
-      console.log("Consumer shutting down...");
-      await consumer.disconnect();
-      process.exit(0);
-    });
-
   } catch (error) {
-    console.error("Error occurred:", error);
+    console.error("❌ Kafka Consumer Error:", error);
   }
 }
 
-// Start the Kafka consumer
-initConsumer().catch((error) => {
-  console.error("Failed to initialize consumer:", error);
-});
+(async () => {
+  await connectDB();
+  await initConsumer();
+})();

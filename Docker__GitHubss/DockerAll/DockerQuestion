@@ -1,0 +1,169 @@
+1. Introduction to Docker
+What is Docker?
+
+A platform for automating the deployment of applications inside lightweight, portable containers.
+
+History and Development :::::::::-----
+Created by Solomon Hykes and released in 2013.
+Built on containerization technology like LXC.
+
+. Installation and Setup ::::::::::--
+
+Installing Docker
+
+Installing Docker on different operating systems (Windows, macOS, Linux).
+
+Docker Desktop
+Using Docker Desktop for local development and testing.
+Docker CLI
+Basic commands for interacting with Docker (docker run, docker ps, docker stop).
+
+
+ Docker Architecture  ::::::----------
+Docker Engine
+Understanding Docker Daemon, CLI, and Docker Registry.
+
+Images and Containers
+Difference between images and containers.
+
+Dockerfile
+Writing Dockerfiles to create custom Docker images.
+
+
+Working with Docker Images ::::::::::---
+Docker Hub
+Pulling images from Docker Hub.
+
+Building Images
+Using docker build to create images from Dockerfiles.
+
+Managing Images
+Listing, tagging, and removing images (docker images, docker rmi).
+
+
+Working with Docker Containers ::::::::::::::-------
+Running Containers
+Starting, stopping, and removing containers (docker run, docker stop, docker rm).
+
+Container Lifecycle
+Managing the lifecycle of containers (start, stop, pause, unpause, restart).
+
+Inspecting Containers
+Viewing container details using docker inspect
+
+
+. Docker Networking :::::::: ----------
+Networking Basics
+Understanding Docker networks (bridge, host, overlay).
+
+Creating Networks
+Creating and managing Docker networks (docker network create, docker network ls).
+
+Connecting Containers
+Linking and communicating between containers in different networks.
+
+
+
+Docker Volumes ::::::::::::---------------
+Data Persistence
+Using volumes to persist data between container restarts.
+
+Creating and Managing Volumes
+Commands for volume management (docker volume create, docker volume ls, docker volume rm).
+
+Mounting Volumes
+Mounting volumes to containers for data storage.
+
+
+
+
+ Docker Compose :::::::::::::::----------
+Introduction to Docker Compose
+Defining multi-container applications with docker-compose.yml.
+
+Compose Commands
+Using docker-compose commands (docker-compose up, docker-compose down).
+
+Service Configuration
+Configuring services, networks, and volumes in Docker Compose.
+
+
+
+Docker Swarm ::::::::::::----------
+
+Introduction to Docker Swarm
+Native clustering and orchestration tool for Docker.
+
+Swarm Mode
+Initializing and managing a Docker Swarm cluster.
+
+Deploying Services
+Using docker service commands to deploy and manage services in Swarm.
+
+
+
+. Kubernetes
+Introduction to Kubernetes
+Overview of Kubernetes as an orchestration tool.
+
+Docker and Kubernetes Integration
+Using Docker with Kubernetes (kubectl, minikube, kubeadm).
+
+
+
+Docker Security ::::::::::::::------------------
+Security Best Practices
+Ensuring secure Docker images and containers.
+
+User Management
+Managing users and permissions within containers.
+
+Securing the Docker Daemon
+Best practices for securing the Docker daemon and API.
+
+
+Docker for Development :::::::::::::::::---------------
+Development Workflows
+Using Docker for development environments and CI/CD pipelines.
+
+Debugging and Logging
+Debugging Docker containers and accessing logs (docker logs).
+
+
+
+Docker for Production:::::::::::::::::--------------------
+
+Deploying to Production
+Best practices for deploying Docker containers in production environments.
+
+Scaling Applications
+Scaling applications using Docker Swarm or Kubernetes.
+
+Monitoring and Logging
+Tools for monitoring container performance and collecting logs (Prometheus, ELK stack).
+
+
+Advanced Docker Topics :::::::::::::::::---------------------
+Multi-Stage Builds
+Creating optimized images with multi-stage builds in Dockerfile.
+
+Docker Secrets and Configs
+Managing sensitive data with Docker secrets and configurations.
+
+Docker Plugins
+Using and creating Docker plugins for extended functionality.
+
+
+
+Docker Ecosystem and Tools ::::::::::::::::---------------------
+Docker Hub
+Public and private image repositories.
+
+Docker Compose
+Tool for defining and running multi-container Docker applications.
+
+Docker Machine
+Tool for managing Docker hosts (deprecated but useful historically).
+
+Docker Registry
+Setting up private registries to store Docker images.

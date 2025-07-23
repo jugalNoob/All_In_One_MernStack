@@ -1,0 +1,67 @@
+npm create vite@latest my-app --template react
+cd my-app
+npm install
+npm run dev
+
+
+//:::: Auto matica code  ::::::::::::
+
+C:\Users\sjuga\Documents\Docker_Special\react\reacts
+
+docker run --name nodeapp -p 3000:3000 --rm -v C:\Users\sjuga\Documents\Docker_Special\react\reacts:/app basic-app
+
+
+///::::::: First row class APP react 
+
+# # Stage 1: Install dependencies and build the application
+# FROM node:21 AS backend-builder
+
+# WORKDIR /app
+
+# # Copy package.json and package-lock.json
+# COPY package.json package-lock.json ./
+
+# # Install dependencies
+# RUN npm install
+
+# # Copy the rest of the application code
+# COPY . . 
+
+# # Stage 2: Create a lightweight image for production
+# FROM node:21-slim
+
+# WORKDIR /app
+
+# # Copy only the necessary files from the first stage
+# COPY --from=backend-builder /app . 
+
+# # Expose the app port
+# EXPOSE 3000
+
+# # Command to run the application
+# CMD ["npm", "start"]
+
+
+::/// Second row class line  :::::::::::::::::::::::
+
+
+    # Use a slim base image to reduce build time
+FROM node:21-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy only package.json and package-lock.json first (improves caching)
+COPY package.json package-lock.json ./
+
+# Install dependencies using `ci` for faster, production-ready installs
+RUN npm ci --only=production
+
+# Copy the entire app after installing dependencies
+COPY . .
+
+# Expose port 3000
+EXPOSE 3000
+
+# Start the application
+CMD ["npm", "start"]

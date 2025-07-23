@@ -1,0 +1,11 @@
+// code automatic update Commands
+
+docker build -t basic-app .
+
+//C:\Users\sjuga\Documents\Docker_Special\Node\app.js
+
+
+docker run --name nodeapp -p 3000:3000 --rm -v C:\Users\sjuga\Documents\Docker_Special\Node:/app basic-app
+
+
+/// use in compose Command 

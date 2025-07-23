@@ -1,52 +1,41 @@
 const express = require("express");
 const router = new express.Router();
-const Signuser=require("../controollers/SignUp")
-const apiGetuser=require("../controollers/ApiGet")
 
+const Signuser = require("../controollers/SignUp");
+const apiGetuser = require("../controollers/ApiGet");
+const pagit = require("../controollers/Pagination");
+const search = require("../controollers/Queary");
+const Agers = require("../controollers/Aggre");
+const SearchAdvaance = require("../controollers/AdvSeachRedisPagination");
+const SearhAdvaanceRedis = require("../controollers/AdvSeachRedisPagination");
 
+const counterMiddleware = require("../RateLimit/Limit"); // Basic rate limiter
+const rateLimiterradis = require("../RateLimit/Redis"); // Redis-based rate limiter
+const rateLimiterradispub = require("../RateLimit/PubSubRedis"); // Redis Pub/Sub limiter
 
-// ---->>> Redis Limit Row class -------------------------->>>
-const  counterMiddleware=require("../RateLimit/Limit") // Simple rateLimit 
-const  rateLimiterradis=require("../RateLimit/Redis") // redis limit 
-const rateLimiterradispub = require("../RateLimit/PubSubRedis");
+// ----------- All Routes ----------------
 
-// ---> Pagination ------------------>>
-const pagit=require("../controollers/Pagination")
-
-
-
-///--->>>Quary search --------------->>
-
-const search=require("../controollers/Queary")
-
-/// --->>aggregation-------->>>>
-const Agers=require("../controollers/Aggre")
-
-
-///--->Advance Code Searching ------------------>..>>
-
-
-const SearchAdvaance=require("../controollers/AdvSeachRedisPagination")
-
-const  SearhAdvaanceRedis =require("../controollers/AdvSeachRedisPagination")
-
-
-
-
-router.get("/SearchAdvaance", SearchAdvaance.ApigetQuearyAdavance);
-
-
-router.get("/apisearchredis",rateLimiterradispub , SearhAdvaanceRedis.ApigetQuearyAdavanceRedis);
-
-
+// 🚀 Signup route
 router.post("/form", Signuser.first);
 
-router.get("/Paninationsearch" , pagit.ApigetPagination) // --> getPagination
+// 📄 Get user with Redis Pub/Sub rate limit
+router.get("/api/v1/users", rateLimiterradispub, apiGetuser.Apiget);
 
-router.get("/search" ,  search.ApigetQueary) // --> getSearchQuary
+// 🔍 Advanced query search (no Redis)
+router.get("/SearchAdvaance", SearchAdvaance.ApigetQuearyAdavance);
 
-router.get("/aggresion" , Agers.Aggress)
+// 🔍 Advanced query search with Redis & pagination
+router.get("/apisearchredis", rateLimiterradispub, SearhAdvaanceRedis.ApigetQuearyAdavanceRedis);
 
-router.get("/getuser",  rateLimiterradispub, apiGetuser.Apiget);// -->with rate LIMIT
+// 📄 Pagination example
+router.get("/Paninationsearch", pagit.ApigetPagination);
+
+// 🔍 Simple query search
+router.get("/search", search.ApigetQueary);
+
+// 📊 Aggregation example
+router.get("/aggresion", Agers.Aggress);
+
+// -----------------------------------------------------
 
 module.exports = router;

@@ -1,0 +1,148 @@
+::::::::: Socket.io :::::::::::::::::::
+https://medium.com/@bootcampmillionaire/what-i-learned-about-websockets-by-building-a-real-time-chat-application-using-socket-io-3d9e163e504
+
+
+:::::::: MongDB system design :::::::::::::::::
+
+https://medium.com/@deepak14ri/sharding-and-replication-in-mongodb-ddb505b8209d
+
+https://medium.com/@deepak14ri/sharding-and-replication-in-mongodb-ddb505b8209d
+[text](https://creately.com/diagram/example/hwhv3th01/mongodb-schema-design)
+
+
+
+:::::::::::: Redis is the ::::::::::::::::::::::
+
+https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.atatus.com%2
+Fblog%2Fredis-tutorial-exploring-data-types-architecture-and-key-features
+%2F&psig=AOvVaw1BNhv9cet1Jki3qD4lpk8f&ust=1731911181090000&source=images&
+cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOj26Yve4okDFQAAAAAdAAAAABAZ
+
+
+https://blog.bytebytego.com/p/ep46-step-by-step-guide-on-system 
+
+
+
+..................My Favourite Software Architecture Patterns::::::::::::::::::::::::::::::::
+
+https://medium.com/gitconnected/my-favourite-software-architecture-patterns-0e57073b4be1
+
+
+
+.........:::::::: DataBase  :::::::::::::::::
+
+[text](https://blog.bytebytego.com/p/understanding-database-types)
+https://www.atatus.com/database-monitoring/mongodb-monitoring
+[text](https://www.atatus.com/database-monitoring/mongodb-monitoring)
+
+
+........... ::::::::: Montoring ::::::::::::::::::::
+https://www.atatus.com/database-monitoring/mongodb-monitoring
+
+
+::::::::::::::::::::::
+
+https://dev.to/somadevtoo/8-system-design-couress-to-learn-distributed-system-architecture-2025-4j81  --->Very imPORTANT
+
+
+1:: Design partten in backend 
+
+- architecture mern stack
+
+...MVC   ---> Important 
+
+System Design ::::::::: Website
+
+https://www.bluemandarin.com/blog/leveraging-mvc-architecture-for-efficient-web-development
+
+1::cavom51482@skrank.com
+
+2::password :: Jugal786123***
+
+3::username :: system
+
+https://www.bluemandarin.com/blog/building-scalable-applications-with-the-mern-stack
+
+https://www.freecodecamp.org/news/rest-api-design-best-practices-build-a-rest-api/
+
+https://medium.com/@atacanymc/implementing-pagination-in-an-express-js-application-551244b62d48
+
+https://www.freecodecamp.org/news/rest-api-design-best-practices-build-a-rest-api/#heading-architecture
+
+
+https://www.bluemandarin.com/blog/building-scalable-applications-with-the-mern-stack#
+
+Image ::https://cdn.prod.website-files.com/645874de5f4e3031e3b9c8b8/64ba2fdfa6e0ed8004944bf5_Group%201000011141.svg
+
+https://medium.com/@ansari028amaan/understanding-mvc-architecture-in-the-mern-stack-5cc083828298
+
+https://www.mongodb.com/resources/languages/mern-stack
+
+
+https://www.javatpoint.com/mern-stack
+
+
+My first system design ::: 
+https://app.eraser.io/workspace/x2MMEswaGJG9StqTTfQG
+
+
+
+implementing  for low level System desgin ::::::::
+
+1:: React.js 
+
+...Validation
+
+...axios
+
+...Components 
+
+...Content Api
+
+...Debouncing performance 
+
+
+
+2:: Node.js Express.js
+
+...MVC
+
+...It also adds helpful functionalities 
+to Node.js HTTP (HyperText Transfer Protocol) objects.
+
+...horizontal scalability
+
+...vertical scalability
+
+...Middleware
+
+....Caching Advantage
+
+...Event-Driven and Asyncronization- 
+
+...https://www.npmjs.com/package/helmet
+
+....Load balanceing 
+
+
+3:: Mongodb 
+
+1:::High Performance: MongoDB has very high performance 
+
+ indexing, scalability, replication, etc.
+
+
+
+
+
+
+8::Middleware
+
+9::Caching Advantage
+
+10::Event-Driven and Asyncronization- 
+
+11::https://www.npmjs.com/package/helmet
+
+12::Load balanceing 
+

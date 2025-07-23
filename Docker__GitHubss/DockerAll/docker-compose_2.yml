@@ -1,0 +1,43 @@
+# version: "3.8"
+
+# services:
+#   backend:
+#     build: ./server
+#     container_name: basic-container
+#     ports:
+#       - "9000:9000"
+#     volumes:
+#       - ./server:/app
+#     working_dir: /app
+#     command: ["npm", "run", "dev"]
+#     environment:
+#       - NODE_ENV=development
+
+
+
+version: "3.8"
+
+services:
+  frontend:
+    build: 
+      context: ./reacts
+      dockerfile: Dockerfile
+    container_name: frontend-container
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./reacts:/app
+      - /app/node_modules  # Prevents overwriting node_modules inside the container
+    working_dir: /app
+
+  backend:
+    build: ./server
+    container_name: backend-container
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./server:/app
+    working_dir: /app
+    command: ["npm", "run", "dev"]
+    environment:
+      - NODE_ENV=development
