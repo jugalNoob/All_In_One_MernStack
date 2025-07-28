@@ -13,19 +13,24 @@ const userInfoLogger = require("./plugins/LoggerReq");
  const hashPassword = require("./plugins/hashPassword");
 // Define the student schema
 const studentSchema = new mongoose.Schema({
-    name: { type: String  ,required:true},
-    email: { type: String , required:true , unique:true}, //unique email address
-    password: { type: String, required:true},
-    date: { type: Date, default: Date.now }, // Default date time
-    shortId: { type: String, unique: true }, // Ensure shortId is unique
-    tokens:[
-        {
-            token:{
-                type:String
-            },
-        }
-    ],
- sessions: [
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  date: { type: Date, default: Date.now },
+  shortId: { type: String, unique: true },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  },
+  tokens: [
+    {
+      token: {
+        type: String
+      }
+    }
+  ],
+  sessions: [
     {
       token: { type: String, required: true },
       ip: String,
@@ -36,21 +41,19 @@ const studentSchema = new mongoose.Schema({
       expiresAt: Date
     }
   ],
-       address: [
-        {
-            add: { type: String }
-        }
-    ],
-   // existing fields...
+  address: [
+    {
+      add: { type: String }
+    }
+  ],
   refreshTokens: [
     {
       token: String,
       expiresAt: Date
     }
-  ],
-
-
+  ]
 });
+
 
 // Plugins Integration
 studentSchema.plugin(hashPassword);                     // Hash password before saving

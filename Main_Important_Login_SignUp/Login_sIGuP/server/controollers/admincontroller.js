@@ -1,8 +1,19 @@
 const Register = require("../model/student");
 
+
+
 const getAllUsers = async (req, res) => {
   try {
-    const userData = await Register.find({ role: 'user' }).select('-password'); // hide password
+    // Remove role filter to fetch all users
+    const userData = await Register.find() // exclude password
+
+
+
+
+
+    console.log(userData);
+    console.log("jugal");
+
     res.status(200).json({ users: userData });
   } catch (error) {
     console.error(error);

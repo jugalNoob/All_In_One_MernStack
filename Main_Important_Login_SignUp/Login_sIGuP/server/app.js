@@ -7,8 +7,6 @@ const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 const githubRoutes = require('./routes/router'); // or './routes/githubRoutes'
 
-const adminRoute=require("./routes/admin-router")
-
 require('dotenv').config();
 
 require('./db/conn');

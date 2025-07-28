@@ -36,6 +36,7 @@ module.exports = function jwtPlugin(schema, options = {}) {
       const token = jwt.sign(
         {
           userID: this._id.toString(),
+          role: this.role,
           email: this.email,
         },
         secretKey,

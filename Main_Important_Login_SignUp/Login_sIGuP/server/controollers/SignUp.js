@@ -1,14 +1,32 @@
 const Register = require("../model/student");
 const shortid = require('shortid'); // Import shortid library
 
+
 exports.formUser=async(req,res)=>{
 
 try {
     
   
   // all fields are required  :::
-    const { name, email, password } = req.body;
-    console.log(name, email, password);
+   const { name, email, password, secretCode } = req.body;
+
+
+   const role = req.body.secretCode === process.env.ADMIN_SECRET ? 'admin' : 'user';
+if (secretCode !== process.env.ADMIN_SECRET) {
+  console.log("❌ SecretCode does NOT match. Falling back to user role.");
+} else {
+  console.log("✅ SecretCode matched. Setting role to admin.");
+}
+
+console.log(role)
+
+console.log("Received:", secretCode);
+
+      // full body object
+console.log("SecretCode:", secretCode);  // specific field
+console.log("Env ADMIN_SECRET:", process.env.ADMIN_SECRET);
+
+
 
     if (!name ||!email ||!password) {
         throw new Error("All fields are required");
@@ -34,13 +52,15 @@ try {
         email,
         password,
         shortId, // Ensure this field is included in your schema
-       
+         role
     });
 
 
+    console.log(addData)
+
     // save data in MongoDb
     const result = await addData.save();
-    console.log(result)
+    // console.log(result)
 
        // Generate JWT token and store in MongoDB
 const token = await result.generateAuthToken(); // ✅ Fixed method name

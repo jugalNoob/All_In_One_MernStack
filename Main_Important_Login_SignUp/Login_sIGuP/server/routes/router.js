@@ -4,12 +4,19 @@ const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const { validateSignup } = require("../middleware/validateSignup");
 const githubController = require('../controollers/githubAuthController.js');
-
+const getAllUsers = require('../controollers/admincontroller.js');
+const checkAdmin = require('../middleware/Checkadmin.js');
 
 // ---> RateLimit Your ------------>>
 
 const RateLimit = require("../middleware/rate"); // Correct import
 
+
+
+
+ //--- >. Admin checxk --------------->>
+
+ router.get('/admin/users', checkAdmin, getAllUsers);
 
 
 // ---> gitHub Login system --------------------------
