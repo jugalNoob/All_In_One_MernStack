@@ -7,6 +7,8 @@ const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 const githubRoutes = require('./routes/router'); // or './routes/githubRoutes'
 
+const adminRoute=require("./routes/admin-router")
+
 require('dotenv').config();
 
 require('./db/conn');
@@ -35,6 +37,7 @@ app.use((err, req, res, next) => {
   }
   next(err);
 });
+
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors(corsOption));

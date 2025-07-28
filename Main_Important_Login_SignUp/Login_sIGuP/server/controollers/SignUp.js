@@ -43,8 +43,7 @@ try {
     console.log(result)
 
        // Generate JWT token and store in MongoDB
-    const token = await result.generateAuthtokens(); // <-- Here, result is the new user
-
+const token = await result.generateAuthToken(); // ✅ Fixed method name
     console.log(token)
 
     const DeviceInfo = await result.generateSessionToken(req);
@@ -80,7 +79,7 @@ try {
           name: result.name,
           email: result.email,
           shortId: result.shortId,
-          token: token, // Optional: only include if needed on client]
+         // token: token, // Optional: only include if needed on client]
            userInfo:userInfo
         }
       });

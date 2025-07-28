@@ -5,6 +5,22 @@
 5::0auth -->GitHub
 
 
+
+🛡️ 3. Advanced Security Concepts
+
+| Topic                            | Description                                                     |
+| -------------------------------- | --------------------------------------------------------------- |
+| **Refresh Token Rotation**       | Avoids reuse of old refresh tokens.                             |
+| **Token Blacklisting**           | Blacklist tokens (esp. refresh tokens) on logout or compromise. |
+| **Session Hijack Detection**     | Detect IP/Device/User-Agent mismatch and kill session.          |
+| **Rate Limiting per Role**       | Example: admins 100 req/min, guests 10 req/min.                 |
+| **IP Whitelisting / Geofencing** | Allow/block users based on IP or country.                       |
+| **JWT Encryption (JWE)**         | Encrypt JWT payload instead of just signing (JWS).              |
+| **OAuth Scopes & Claims**        | Fine-grained control over access rights via token claims.       |
+| **Certificate Pinning**          | Ensures only trusted certificates used in HTTPS.                |
+| **PKCE (OAuth for Mobile)**      | Secure mobile OAuth login (prevents interception).              |
+
+
 Authentication is the process of verifying the identity of a user, system, or application. There are several types of authentication methods, and they can be categorized based on the type of information used for verification:
 
 🔐 Main Types of Authentication

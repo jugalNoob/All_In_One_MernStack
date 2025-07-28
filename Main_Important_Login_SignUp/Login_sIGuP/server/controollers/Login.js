@@ -12,7 +12,6 @@ const geoip = require("geoip-lite");
 
 // -->>> User Login Jwt And Loaction ---------------------->>
 
-
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 

@@ -5,6 +5,12 @@ const keysecret = process.env.SECRET_KEY
 var bcrypt = require('bcryptjs');
 const jwt=require("jsonwebtoken")
 const argon2 = require('argon2');
+const userInfoLogger = require("./plugins/LoggerReq");
+
+ const jwtPlugin = require("./plugins/TokenGent");
+
+ const sessionTokenGenerator = require("./plugins/UserMobile");
+ const hashPassword = require("./plugins/hashPassword");
 // Define the student schema
 const studentSchema = new mongoose.Schema({
     name: { type: String  ,required:true},
@@ -30,114 +36,70 @@ const studentSchema = new mongoose.Schema({
       expiresAt: Date
     }
   ],
-
-
        address: [
         {
             add: { type: String }
         }
     ],
+   // existing fields...
+  refreshTokens: [
+    {
+      token: String,
+      expiresAt: Date
+    }
+  ],
 
- 
 
- 
 });
 
-
-//You can generate and track a session like this:
-
-studentSchema.methods.generateSessionToken = async function (req) {
-  const jwt = require("jsonwebtoken");
-  const geoip = require("geoip-lite");
-
-  const token = jwt.sign({ userID: this._id.toString(), email: this.email }, keysecret, {
-    expiresIn: "90m"
-  });
-
-  // Extract user context
-  let ip = req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress;
-  if (ip === "::1") ip = "103.27.9.41"; // mock for local
-  else if (ip?.startsWith("::ffff:")) ip = ip.split("::ffff:")[1];
-
-  const userAgent = req.headers["user-agent"] || "Unknown";
-  const location = geoip.lookup(ip)?.city + ", " + geoip.lookup(ip)?.country;
-
-  this.sessions.push({
-    token,
-    ip,
-    userAgent,
-    location,
-    expiresAt: new Date(Date.now() + 90 * 60 * 1000)
-  });
-
-  await this.save();
-  return token;
-};
-
-// ----> User Important ass IN sigup importantion  --------------------->>
-
-studentSchema.methods.generateUserInfomration = async function (href, ip, hostname, pathname, protocol, connection, host, secChUaPlatform, acceptLanguage, secChUa) {
-    const token = {
-        href,
-        'IP Address': ip,
-        Host: hostname,
-        Pathname: pathname,
-        Protocol: protocol,
-        Connection: connection,
-        'Host Header': host,
-        'Sec-CH-UA-Platform': secChUaPlatform,
-        'Accept-Language': acceptLanguage,
-        'Sec-CH-UA': secChUa
-    }; // Example token, this should be generated securely
-    this.address.push({ add: JSON.stringify(token) });
-    await this.save();
-    return token;
-};
-
-
-
-
-
-studentSchema.methods.generateAuthtokens = async function () {
-
-    try {
-      let token23 = jwt.sign({
-        userID:this._id.toString(),
-      email:this.email}, keysecret)
-  
-  
-      this.tokens = this.tokens.concat({ token: token23 });
-      await this.save();
-      return token23;
-  } catch (error) {
-      res.status(422).json(error)
-  } 
-  };
-  
-
-// Create cryptography 
-
-studentSchema.pre("save", async function (next) {
-    try {
-      if (this.isModified("password")) {
-        // this.password = await bcrypt.hash(this.password, 12);
-        this.password=await argon2.hash(this.password)
-      }
-  
-      next();
-    } catch (error) {
-      throw new Error(error);
-    }
-  });
-
-
-
-
+// Plugins Integration
+studentSchema.plugin(hashPassword);                     // Hash password before saving
+studentSchema.plugin(jwtPlugin, { expiresIn: "2h" });   // Generate auth token
+studentSchema.plugin(userInfoLogger);                   // Store request info
+studentSchema.plugin(sessionTokenGenerator);            // Generate session info
 
 // Create and export the student model
 const Register  = mongoose.model("Url", studentSchema);
 module.exports = Register ;
 
 
+
+
+
+
+
+
+//   /// ---->>>>  JWT refersToken ------------------------------>>>
+
+//   studentSchema.methods.generateRefreshToken = async function () {
+//   const refreshToken = jwt.sign(
+//     { userID: this._id.toString(), email: this.email },
+//     keysecret,
+//     { expiresIn: "7d" }
+//   );
+
+//   this.refreshTokens.push({
+//     token: refreshToken,
+//     expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+//   });
+
+//   await this.save();
+//   return refreshToken;
+// };
+
+
+// // -------------------->????rotateRefreshToken 
+
+
+// studentSchema.methods.rotateRefreshToken = async function (oldRefreshToken) {
+//   // Remove the old refresh token
+//   this.refreshTokens = this.refreshTokens.filter(rt => rt.token !== oldRefreshToken);
+
+//   // Generate a new one
+//   const newRefreshToken = await this.generateRefreshToken();
+
+//   await this.save();
+//   return newRefreshToken;
+// };
 
 

@@ -1,36 +1,20 @@
-const { hash } = require("bcryptjs")
-
- 1:: static algorithms 
-
- 2::Round Robin algorithms
-
- 3::Round Robin algorithms Demo 
-
- 4::Weighted Round Robin algorithms
-
- 5::Dens Round Robin algorithms
-
- 6::Ip hash algorithms
-
- 7::Url hash algorithms 
-
- 8::Random alloaction 
-
- 9::Dynamic algorithms
-
- 10::Least connection 
-
- 11:Weighted Least connection algorithms
-
- 12::least Respones Time algorithms
-
- 13::Resourse based algorithms
-
- 14Geo loaction based load balancing 
-
- 15::Rate limiting 
-
- 16::session persistence 
+| #  | Algorithm                             | Type      | Best Use Case                |
+| -- | ------------------------------------- | --------- | ---------------------------- |
+| 1  | Static                                | Simple    | Testing                      |
+| 2  | Round Robin                           | Static    | Equal servers                |
+| 4  | Weighted Round Robin                  | Static    | Unequal power                |
+| 5  | Dense Round Robin                     | Static    | Reduce context switch        |
+| 6  | IP Hash                               | Sticky    | Same user to same server     |
+| 7  | URL Hash                              | Static    | Caching by path              |
+| 8  | Random Allocation                     | Static    | Simple traffic split         |
+| 9  | Dynamic Algorithms                    | Dynamic   | Real-time optimization       |
+| 10 | Least Connections                     | Dynamic   | Many long-lived connections  |
+| 11 | Weighted Least Connections            | Dynamic   | Load-aware + unequal servers |
+| 12 | Least Response Time                   | Dynamic   | Real-time applications       |
+| 13 | Resource-Based                        | Dynamic   | CPU/RAM-aware routing        |
+| 14 | Geo-location Based                    | Geo-aware | Global distribution          |
+| 15 | Rate Limiting                         | Control   | Abuse/DDoS protection        |
+| 16 | Session Persistence (Sticky Sessions) | Sticky    | Stateful connections         |
 
 
 
