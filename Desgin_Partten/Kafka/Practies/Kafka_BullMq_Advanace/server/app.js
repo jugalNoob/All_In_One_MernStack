@@ -1,81 +1,45 @@
-// const express = require("express");
-// const connectDB = require("./db/conn"); // Ensure DB connection is imported
-// const router = require("./routes/router");
-// const startServer = require('./Cluster/clust');
-// const redisClient = require("./Redis/redisClient"); // Import Redis client
-// const cors = require('cors');
-// const app = express();
-// const port = 9000;
-
-
-
-// const corsOptions = {
-//   origin: "http://localhost:3000",
-//   methods: "GET,POST,PUT,DELETE,PATCH,HEAD",
-//   credentials: true,
-// };
-
-// startServer(app, port);
-
-// app.use(express.json());  // ✅ Add this line before using routes
-// app.use(cors(corsOptions));
-// app.use(router);
-
-// // Connect to MongoDB before starting the server
-// (async () => {
-//     await connectDB();
-//     app.listen(port, () => {
-//         console.log(`🚀 Server running on http://localhost:${port}`);
-//     });
-// })();
-
-// // Gracefully shut down server
-// process.on("SIGINT", async () => {
-//     console.log("Shutting down server...");
-//     process.exit(0);
-// });
-
-
-
-
 const express = require("express");
-const connectDB = require("./db/conn");
-const router = require("./routes/router");
-const startServer = require('./Cluster/clust');
-const redisClient = require("./Redis/redisClient");
-const TimeDate = require("./rateLimite/rate"); // Correct import
-const cors = require('cors');
+const { Kafka } = require('kafkajs')
+const router = require('./routes/router');
+
 const app = express();
+
 const port = 9000;
 
-const corsOptions = {
-  origin: "http://localhost:3000",
-  methods: "GET,POST,PUT,DELETE,PATCH,HEAD",
-  credentials: true,
-};
-
-
-
-// Apply middlewares before starting cluster workers
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors(corsOptions));
-app.use(TimeDate); // Apply the middleware globally
+app.use(express.json())
 app.use(router);
 
 
 
-// Start cluster (workers will listen)
-startServer(app, port);
+
+app.listen(port,()=>{
+    console.log(`Server is running on port ${port}`)
+})
+
+
+/// Command  Line ........ 
+
+
+// 1::  docker run -p 2181:2181 zookeeper
+
+
+// 2::docker run -p 9092:9092 \
+// -e KAFKA_ZOOKEEPER_CONNECT=192.168.29.78:2181 \
+// -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT:192.168.29.78:9092 \
+// -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 \
+// confluentinc/cp-kafka
+
+// docker run -p 2181:2181 zookeeper
+
+// docker-compose up
+
+//1::nodemon app.js 
+
+//2::nodemon admin.js 
+
+//3::nodemon  producer.js 
+
+//4::nodemon consumer.js
 
 
 
-
-// Graceful shutdown
-process.on("SIGINT", async () => {
-  console.log("Shutting down server...");
-  process.exit(0);
-});
-
-
-module.exports = app; // Export only `app`

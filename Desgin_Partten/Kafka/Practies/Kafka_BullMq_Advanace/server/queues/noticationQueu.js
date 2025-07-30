@@ -1,10 +1,11 @@
 const { Queue } = require('bullmq');
 
-const NotificationQueue = new Queue('NotificationQueue', {
+// Initialize the queue
+const emailQueue = new Queue('emailQueue', {
     connection: {
         host: 'localhost',
         port: 6379,
     },
 });
 
-module.exports = NotificationQueue;
+module.exports = emailQueue;

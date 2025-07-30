@@ -1,5 +1,5 @@
 const mongoose=require("mongoose")
-
+require('dotenv').config();
 
 const DB = "mongodb+srv://jugal786:jugal786@cluster0.sgg8t.mongodb.net/ones?retryWrites=true&w=majority";
 // const DB = process.env.DATABASE; // Correct usage
