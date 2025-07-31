@@ -1,0 +1,69 @@
+// SEARCH /users/search?q=term
+app.get('/users/search', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ message: 'Search query (q) is required.' });
+  }
+
+  try {
+    const response = await esClient.search({
+      index: 'users',
+      query: {
+        multi_match: {
+          query: q,
+          fields: ['name', 'email'],
+          fuzziness: 'auto' // typo-tolerant
+        }
+      }
+    });
+
+    const results = response.hits.hits.map(hit => ({
+      id: hit._id,
+      ...hit._source
+    }));
+
+    return res.json({ results });
+  } catch (err) {
+    console.error('Search error:', err);
+    return res.status(500).json({ message: 'Search failed', error: err.message });
+  }
+});
+
+
+// GET /users/all
+app.get('/users/all', async (req, res) => {
+  try {
+    const response = await esClient.search({
+      index: 'users',
+      size: 100, // limit result size
+      query: {
+        match_all: {}
+      }
+    });
+
+    const users = response.hits.hits.map(hit => ({
+      id: hit._id,
+      ...hit._source
+    }));
+
+    return res.json({ users });
+  } catch (err) {
+    console.error('Fetch all error:', err);
+    return res.status(500).json({ message: 'Failed to fetch users', error: err.message });
+  }
+});
+
+
+PUT /users
+{
+  "mappings": {
+    "properties": {
+      "name": { "type": "text" },
+      "email": { "type": "keyword" },
+      "password": { "type": "keyword" },
+      "createdAt": { "type": "date" }
+    }
+  }
+}
+
