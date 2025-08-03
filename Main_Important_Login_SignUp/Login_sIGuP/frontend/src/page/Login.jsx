@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import './style/login.css';
-import cookie from "js-cookie"
+import Cookies from "js-cookie";
+import axios from "axios";
+
+
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -10,88 +13,65 @@ function Login() {
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState(''); // For server-side errors
 
-  let timeout;
-  
-  useEffect(() => {
-    return () => {
-      // Clear timeout on component unmount
-      clearTimeout(timeout);
-    };
-  }, []);
+let timeout; // Declare it outside component or useRef for safety
 
-  const validate = () => {
-    const errors = {};
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!email) {
-      errors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      errors.email = 'Invalid email format';
-    }
+  const validationErrors = validate();
+  setErrors(validationErrors);
 
-    if (!pass) {
-      errors.password = 'Password is required';
-    } else if (pass.length < 7) {
-      errors.password = 'Password must be at least 7 characters';
-    }
+  if (Object.keys(validationErrors).length > 0) return;
 
-    return errors;
-  };
+  clearTimeout(timeout); // Clear any previous timeout
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  timeout = setTimeout(async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:9000/loginUser",
+        { email, password: pass },
+        { withCredentials: true }
+      );
 
-    const validationErrors = validate();
-    setErrors(validationErrors);
+      const res = response.data;
 
-    if (Object.keys(validationErrors).length > 0) {
-      return; // Exit if validation fails
-    }
-
-    clearTimeout(timeout);
-    timeout = setTimeout(async () => {
-      try {
-        const response = await fetch("http://localhost:9000/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password: pass }),
-        });
-
-        const res = await response.json();
-
-        if (response.status === 401) {
-          setServerError('Unauthorized: Invalid email or password');
-          return;
-        }
-
-        if (response.status === 201) {
-          alert("Check your form for errors");
-        } else {
-          console.log(res, 'user information');
-       
-
-          if (!res.result || !res.result.token) {
-            console.log("Cookie not added: Token is missing or invalid");
-        } else {
-            cookie.set("usersdatatoken", res.result.token, {
-                secure: true,
-                sameSite: "Strict",
-                expires: 1 // Expires in 1 day
-            });
-            console.log("Cookie added successfully!");
-        }
-       
-
-      
-          //navigate("/"); // Redirect to a different route after successful login
-        }
-      } catch (error) {
-        console.error("Error during fetch:", error);
-        setServerError('An unexpected error occurred. Please try again.');
+      // ⚠️ Check server error
+      if (response.status === 401) {
+        setServerError("Unauthorized: Invalid email or password");
+        return;
       }
-    }, 2000);
-  };
+
+      if (response.status === 201) {
+        alert("Check your form for errors");
+        return;
+      }
+
+      // ✅ Success
+      console.log("User info:", res);
+
+      if (!res.user || !res.user.token) {
+        console.log("Token missing from response");
+      } else {
+        const existingToken = Cookies.get("usersdatatoken");
+
+        if (!existingToken || existingToken !== res.user.token) {
+          Cookies.set("usersdatatoken", res.user.token, {
+            secure: true,
+            sameSite: "Strict",
+            expires: 1, // 1 day
+          });
+          console.log("Cookie added/updated successfully!");
+        } else {
+          console.log("Cookie already exists and is up-to-date:", existingToken);
+        }
+      }
+    } catch (error) {
+      console.error("Error during login:", error?.response?.data || error.message);
+      setServerError("An unexpected error occurred. Please try again.");
+    }
+  }, 2000);
+};
+
 
   return (
     <div>

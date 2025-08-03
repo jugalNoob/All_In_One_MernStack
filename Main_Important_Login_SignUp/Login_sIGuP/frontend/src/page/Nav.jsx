@@ -17,6 +17,7 @@ const Nav = () => {
         <Link to="/dash" style={linkStyle}>Dash</Link>
         <Link to="/forget" style={linkStyle}>Forget</Link>
         <Link to="/dashboardg" style={linkStyle}>GitHub Dashboard</Link>
+                <Link to="/admin" style={linkStyle}>admin</Link>
       </nav>
 
       <Outlet /> {/* Renders nested child routes */}

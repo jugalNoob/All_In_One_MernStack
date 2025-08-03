@@ -99,7 +99,7 @@ const token = await result.generateAuthToken(); // ✅ Fixed method name
           name: result.name,
           email: result.email,
           shortId: result.shortId,
-         // token: token, // Optional: only include if needed on client]
+          token: token, // Optional: only include if needed on client]
            userInfo:userInfo
         }
       });

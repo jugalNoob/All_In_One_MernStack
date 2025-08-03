@@ -8,6 +8,7 @@ import From from './page/From';
 import Home from './page/Home';
 import Nav from './page/Nav';
 import Login from './page/Login';
+import Admin from './page/Admin'
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "/dash", element: <Dash /> },
       { path: "/forget", element: <Forget /> },
       { path: "/dashboardg", element: <DashboardG /> }, // lowercase recommended
+        { path: "/admin", element: <Admin/> }, // lowercase recommended
       { path: "*", element: <h1>404 - Page Not Found</h1> }
     ]
   }
