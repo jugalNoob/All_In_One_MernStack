@@ -1,9 +1,7 @@
 const kafka = require("../client/client");
-// const connectDB = require("../db/conn");
-
 
 async function initConsumer() {
-  const consumer = kafka.consumer({ groupId: "user-signUp-group" });
+  const consumer = kafka.consumer({ groupId: "signup-group" });
 
   try {
     console.log("🔄 Connecting Kafka Consumer...");
@@ -11,27 +9,34 @@ async function initConsumer() {
     console.log("✅ Consumer connected successfully");
 
     await consumer.subscribe({ topic: "signUp_user", fromBeginning: true });
-    console.log("✅ Subscribed to topic 'signUp_user'");
+    console.log("📡 Subscribed to topic: 'signUp_user'");
 
     await consumer.run({
-      eachMessage: async ({ message }) => {
+      eachMessage: async ({ topic, partition, message }) => {
+        const offset = message.offset;
+        const timestamp = message.timestamp;
+        const key = message.key?.toString() || "null";
+        const value = message.value?.toString();
+
         try {
-          const userData = JSON.parse(message.value.toString());
-          console.log(`📥 Received message: ${JSON.stringify(userData)}`);
+          const data = JSON.parse(value);
 
-
+          console.log(`\n📥 New Message Received`);
+          console.log(`├─ 🧩 Topic: ${topic}`);
+          console.log(`├─ 🧱 Partition: ${partition}`);
+          console.log(`├─ 🔑 Key: ${key}`);
+          console.log(`├─ ⏱️ Timestamp: ${timestamp}`);
+          console.log(`├─ #️⃣ Offset: ${offset}`);
+          console.log(`└─ 📦 Value:`, data);
         } catch (err) {
-          console.error("❌ Error processing message:", err.message);
+          console.error("❌ Failed to parse message value:", value);
+          console.error("   ↪ Error:", err.message);
         }
       },
     });
-
   } catch (error) {
-    console.error("❌ Kafka Consumer Error:", error);
+    console.error("❌ Error starting Kafka consumer:", error);
   }
 }
 
-(async () => {
-  await connectDB();
-  await initConsumer();
-})();
+initConsumer().catch(console.error);

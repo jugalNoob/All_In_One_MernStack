@@ -39,7 +39,7 @@ async function sendMessage(topic, messageObj) {
 
         
         await producer.send({
-            partition:0,
+     
             topic,
             messages: [
                 {

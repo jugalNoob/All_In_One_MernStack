@@ -20,16 +20,7 @@ exports.signUP = async (req, res) => {
     const user = { name, email, password };
 
     // Send user data to Kafka topic
-    await  sendMessage({
-      topic: "signUp_user",
-      messages: [
-        {
-          partition:0,
-          key: email, // Fix: Use email as a string key
-          value: JSON.stringify(user),
-        },
-      ],
-    });
+     await sendMessage("signUp_user", user);;
 
        // Send message to Kafka
     // await sendMessage("signUp_user", user);
