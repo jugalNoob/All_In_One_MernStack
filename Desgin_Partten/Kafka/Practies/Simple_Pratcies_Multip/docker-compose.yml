@@ -8,6 +8,8 @@ services:
       - ALLOW_ANONYMOUS_LOGIN=yes
     ports:
       - "2181:2181"
+    networks:
+      - backend_network
 
   kafka:
     image: bitnami/kafka:latest
@@ -25,3 +27,36 @@ services:
       KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       ALLOW_PLAINTEXT_LISTENER: yes
+    networks:
+      - backend_network
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - data:/data/db
+    networks:
+      - backend_network
+
+  backend:
+    build: ./backend
+    container_name: backend-container
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./backend:/app
+    working_dir: /app
+    command: ["npm", "run", "dev"]
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - kafka
+      - mongodb
+    networks:
+      - backend_network
+
+volumes:
+  data:
+
+networks:
+  backend_network:

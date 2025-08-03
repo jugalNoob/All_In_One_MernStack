@@ -100,3 +100,77 @@ Deployment (Docker + Kubernetes)
 Monitoring stack (Prometheus + Grafana)
 
 Cloud setup (AWS, GCP, Azure)
+
+
+
+
+                       [Users / Clients]
+                              ↓
+                     [Load Balancer / Nginx]
+                    ↙        ↓        ↘
+              [Node.js Worker 1] [Worker 2] ... [Worker N]
+                       (cluster or pm2)
+                              ↓
+                      [Kafka Producers]
+                              ↓
+                     [Kafka Topic (3+ partitions)]
+                  ↙       ↓         ↘
+      [Consumer 1] [Consumer 2] [Consumer 3]
+           ↓            ↓            ↓
+      [DB Write]   [DB Write]   [DB Write]
+
+
+      🔍 What This Architecture Shows
+Component	Meanin
+
+| Component        | Meaning                                                                              |
+| ---------------- | ------------------------------------------------------------------------------------ |
+| **3 Producers**  | Each can send messages to any partition (can be auto or manual key).                 |
+| **1 Topic**      | `signUp_user` is the topic holding the partitions.                                   |
+| **3 Partitions** | Kafka will distribute messages based on **key hashing** or **round-robin**.          |
+| **3 Consumers**  | All are part of the same **consumer group** → each partition goes to **1** consumer. |
+| **Parallelism**  | Each consumer handles one partition → full parallel processing.                      |
+
+
+
+
+
+      🧪 5. How to Load Test 100,000 Requests in 1 Minute
+Use autocannon or k6
+
+bash
+Copy
+Edit
+npx autocannon -c 1000 -d 60 -p 10 http://localhost:9000/v1/users/register
+
+
+-c 1000 = 1000 concurrent connections
+
+-d 60 = for 60 seconds
+
+Goal = Reach 100,000 requests total
+
+🔁 Repeat test and monitor:
+
+CPU, RAM
+
+Kafka lag
+
+Mongo insert time
+
+📊 Real Example Benchmark (if tuned)
+
+| Component         | Config                               | Throughput            |
+| ----------------- | ------------------------------------ | --------------------- |
+| Kafka             | 3+ partitions, SSD, 1 broker         | 100k+ messages/min    |
+| Node.js (Cluster) | 8 processes, fast producer code      | 2k–10k requests/sec   |
+| MongoDB           | WiredTiger, SSD, insertMany batching | \~50k–100k writes/min |
+
+
+✅ Final Tips to Achieve 1 Lakh / Minute
+✅ Use Node.js cluster or pm2
+✅ Use async Kafka producers (avoid slow DB ops in same request)
+✅ Run multiple consumers (equal to partitions)
+✅ Use auto-scaling or Docker + Kubernetes for scaling up
+✅ Benchmark everything step-by-step
+
