@@ -1,73 +1,110 @@
-
-
 const kafka = require("../client/client");
 
-let producer;
+let producer; // Single instance
 
 /**
  * Initialize Kafka producer and connect
  */
 async function initProducer() {
-    try {
-        producer = kafka.producer();
-        await producer.connect();
-        console.log("✅ Kafka Producer connected successfully UserSignUp");
-    } catch (error) {
-        console.error("❌ Error initializing Kafka Producer:", error);
-    }
+  try {
+    producer = kafka.producer();
+    await producer.connect();
+    console.log("✅ Kafka Producer connected successfully GetUser  Infomration ");
+  } catch (error) {
+    console.error("❌ Error initializing Kafka Producer:", error);
+  }
 }
 
 /**
  * Send a message object to Kafka topic
  * @param {string} topic - Kafka topic name
- * @param {Object} messageObj - Message object to send (must include 'email' field for message key)
+ * @param {Object} messageObj - Message object to send (must include 'email' or unique key)
  */
-async function sendMessage(topic, messageObj) {
-    try {
-        if (!producer) {
-            throw new Error("Kafka producer is not initialized.");
-        }
-        
-        if (!messageObj.email) {
-            // If you want to allow missing email, comment out below error and uncomment the key=null line below
-            throw new Error("Message object must include an 'email' field for message key.");
-            // console.warn("⚠️ Warning: email field missing, using null key");
-        }
+async function sendMessage(topic, messageObj, key = null) {
+  try {
+    if (!producer) throw new Error("Kafka producer is not initialized.");
 
-        await producer.send({
-            partition:0,
-            topic,
-            messages: [
-                {
-                    key: messageObj.email || null, // Use email as key, or null if not present (optional)
-                    value: JSON.stringify(messageObj),
-                },
-            ],
-        });
-        console.log(`📩 Message sent to Kafka topic "${topic}":`, messageObj);
-    } catch (error) {
-        console.error("❌ Error sending message to Kafka:", error);
-    }
+    const kafkaKey = key || messageObj.email || "default-key";
+
+    await producer.send({
+      topic,
+      messages: [
+        {
+          key: kafkaKey,
+          value: JSON.stringify(messageObj),
+        },
+      ],
+    });
+console.log(`📩 Sent to "${topic}":`)
+    // console.log(`📩 Sent to "${topic}":`, messageObj);
+  } catch (error) {
+    console.error("❌ Kafka send error:", error.message || error);
+    throw error;
+  }
 }
+
 
 /**
  * Disconnect Kafka producer gracefully
  */
 async function disconnectProducer() {
-    try {
-        if (producer) {
-            await producer.disconnect();
-            console.log("✅ Kafka Producer disconnected successfully");
-        }
-    } catch (error) {
-        console.error("❌ Error disconnecting Kafka Producer:", error);
+  try {
+    if (producer) {
+      await producer.disconnect();
+      console.log("✅ Kafka Producer disconnected successfully");
     }
+  } catch (error) {
+    console.error("❌ Error disconnecting Kafka Producer:", error.message || error);
+  }
 }
 
-// Listen for SIGINT (Ctrl+C) and disconnect producer cleanly
+// Graceful shutdown on Ctrl+C
 process.on("SIGINT", async () => {
-    await disconnectProducer();
-    process.exit(0);
+  await disconnectProducer();
+  process.exit(0);
 });
 
 module.exports = { initProducer, sendMessage };
+
+
+
+
+// // Add chunking logic to sendMessage
+// async function sendMessage(topic, messageObj, key = null) {
+//   try {
+//     if (!producer) throw new Error("Kafka producer is not initialized");
+    
+//     // Chunk large user arrays
+//     if (messageObj.users?.length > 500) {
+//       const chunks = chunkArray(messageObj.users, 500);
+//       for (const [i, chunk] of chunks.entries()) {
+//         await producer.send({
+//           topic,
+//           messages: [{
+//             key: `${key}_chunk${i}`,
+//             value: JSON.stringify({ ...messageObj, users: chunk })
+//           }]
+//         });
+//       }
+//       return;
+//     }
+    
+//     // Original logic for small messages
+//     const kafkaKey = key || messageObj.email || "default-key";
+//     await producer.send({
+//       topic,
+//       messages: [{ key: kafkaKey, value: JSON.stringify(messageObj) }]
+//     });
+//   } catch (error) {
+//     console.error("❌ Kafka send error:", error);
+//     throw error;
+//   }
+// }
+
+// function chunkArray(arr, size) {
+//   const chunks = [];
+//   for (let i = 0; i < arr.length; i += size) {
+//     chunks.push(arr.slice(i, i + size));
+//   }
+//   return chunks;
+// }

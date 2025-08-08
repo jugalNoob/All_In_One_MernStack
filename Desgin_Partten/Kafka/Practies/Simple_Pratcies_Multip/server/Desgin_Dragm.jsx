@@ -1,3 +1,8 @@
+ASCII Diagram:  ---------------------------->.>Name  ------------->>
+
+
+       
+       
        ┌──────────────┐
        │   Producer   │
        │ (Node.js)    │
@@ -174,3 +179,48 @@ Mongo insert time
 ✅ Use auto-scaling or Docker + Kubernetes for scaling up
 ✅ Benchmark everything step-by-step
 
+
+
+
+https://chatgpt.com/c/688de562-b8ec-8001-b7e3-0909ca2420a5
+
+
++-----------+     +-----------+     +-----------+
+| Producer1 |     | Producer2 |     | Producer3 |
++-----------+     +-----------+     +-----------+
+      \               |               /
+       \              |              /
+        +-------------+-------------+
+                      |
+               Kafka Broker
+         Topic: signUp_user (3 partitions)
+          |      |       |
+       [ P0 ]  [ P1 ]  [ P2 ]
+          |      |       |
+     +---------+---------+---------+
+     |         |         |         |
+     ↓         ↓         ↓         ↓
+  Consumer1  Consumer2  Consumer3  (Same groupId)
+
+
+
+    +----------------+                 +------------------+                   +----------------+
+  |                |  HTTP POST      |                  |   Kafka Producer  |                |
+  | Postman / UI   +---------------> | Express Server   +------------------>+ Kafka Broker   |
+  |                |                 |  /register route |                   |  (signUp_user) |
+  +----------------+                 +------------------+                   +--------+-------+
+                                                                                |   |
+                                                                                |   |
+                                                                   +------------+   +------------+
+                                                                   |                           |
+                                                          Partition 0                 Partition 1, 2 (auto)
+                                                                   |                           |
+                                                                 +-------------------------------+
+                                                                 |        Kafka Consumer        |
+                                                                 | (groupId: user-signUp-group) |
+                                                                 +-------------------------------+
+                                                                              |
+                                                                              |
+                                                                         +---------+
+                                                                         | MongoDB |
+                                                                         +---------+

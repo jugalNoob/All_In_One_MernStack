@@ -17,6 +17,12 @@ async function init() {
         numPartitions: 3,
         replicationFactor: 1
       },
+
+        {
+        topic: 'get_user',
+        numPartitions: 3,
+        replicationFactor: 1
+      },
     
     ],
   });

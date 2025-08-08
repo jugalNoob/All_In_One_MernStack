@@ -1,25 +1,43 @@
-const mongoose=require("mongoose")
-require('dotenv').config();
+const mongoose = require('mongoose');
 
-const DB = "mongodb+srv://jugal786:jugal786@cluster0.sgg8t.mongodb.net/ones?retryWrites=true&w=majority";
-// const DB = process.env.DATABASE; // Correct usage
 
-async function connectDB() {
+
+// 🐞 Custom debug logger
+
+mongoose.set('debug', function (collectionName, method, query, doc) {
+  const timestamp = new Date().toISOString();
+  console.log(
+    `[${timestamp}] 📦 Mongoose => ${collectionName}.${method}(${JSON.stringify(query)}, ${JSON.stringify(doc)})`
+  );
+});
+
+
+
+// 🛑 Disable command buffering so you fail fast if not connected
+mongoose.set('bufferCommands', false);
+mongoose.set('bufferTimeoutMS', 0);
+
+const connectDB = async () => {
   try {
-    if (!DB) {
-      throw new Error("Database URL not provided. Please set the DATABASE environment variable.");
-    }
-    console.log("Connecting to MongoDB...");
-    await mongoose.connect(DB, {
+    await mongoose.connect('mongodb+srv://jugal786:jugal786@cluster0.sgg8t.mongodb.net/ones?retryWrites=true&w=majority', {
+      maxPoolSize: 100,
+      minPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      family: 4,
       useNewUrlParser: true,
       useUnifiedTopology: true,
+            bufferCommands: false, // optional, or just remove if unnecessary
     });
-    console.log("Connected to MongoDB successfully");
+
+    console.log("✅ MongoDB connected with pooling");
   } catch (err) {
-    console.error("Error connecting to MongoDB:", err.message);
-    process.exit(1); // Exit process if DB connection fails
+    console.error("❌ MongoDB connection error:", err);
+    // Print full error details
+    console.error("Full Error Stack:", err.stack);
+    process.exit(1);
   }
-}
+};
 
-
+// module.exports = connectMongo;
 module.exports = connectDB;
