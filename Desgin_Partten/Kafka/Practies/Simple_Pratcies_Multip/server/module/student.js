@@ -1,5 +1,5 @@
-
 const mongoose=require('mongoose')
+
 
 const userSchema = new mongoose.Schema({
    name: { type: String, required: true, unique: true },
@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
    hobbies:{   type: [String], required: true},
    country:{type:String, required: true},
    bio:{type:String, required: true},
-
+   isEligible:{type:Boolean, required: true},
    gender:{type:String, required: true},
   date: {type: Date, default: Date.now ,required: true// Default value for date required: true
       },
@@ -19,6 +19,6 @@ const userSchema = new mongoose.Schema({
 
 
 
-const Register = new mongoose.model("Means", userSchema)
+const RegisterGet = new mongoose.model("Means", userSchema)
     // Error handler function
-  module.exports = Register;
+  module.exports = RegisterGet;

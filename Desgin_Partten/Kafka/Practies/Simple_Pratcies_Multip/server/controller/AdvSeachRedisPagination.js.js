@@ -1,8 +1,8 @@
-const RegisterGet = require("../model/Apistudent");
+const RegisterGet = require("../module/student");
 const axios = require('axios');
-const { redisClient } = require("../Redis/redisClient"); // ✅ fix
+const  redisClient  = require("../Redis/redisClient"); // ✅ fix
 const zlib = require("zlib");
-
+const { initProducer, sendMessage } = require("../producer/producer_login"); 
 
 /// ------ >>>>> With Redis Cahes Show row class  -----------------> Important  
 
@@ -102,6 +102,22 @@ exports.ApigetQuearyAdavanceRedis = async (req, res) => {
       "Content-Type": "application/json",
     });
 
+
+    // 🔁 Kafka message
+    await sendMessage("get_user",  payload );
+
+
+    // / Send analytics event to Kafka instead of full payload
+    // await sendMessage("api_query_analytics", {
+    //   type: "user_query",
+    //   queryParams: req.query,
+    //   resultCount: data.length,
+    //   cacheStatus: "miss",
+    //   responseTime: Date.now() - startTime
+    // });
+
+
+
     return res.status(200).json(payload);
   } catch (error) {
     console.error("❌ DB Error:", error);
@@ -110,4 +126,4 @@ exports.ApigetQuearyAdavanceRedis = async (req, res) => {
 };
 
 
-
+initProducer()

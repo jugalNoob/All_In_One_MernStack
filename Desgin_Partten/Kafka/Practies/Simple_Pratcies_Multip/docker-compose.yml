@@ -31,6 +31,29 @@ services:
     ports:
       - "6379:6379"
     restart: always
+    command: redis-server --appendonly yes
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - data:/data/db
+    networks:
+      - backend_network
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    networks:
+      - backend_network
 
   nginx:
     image: nginx:latest
@@ -40,17 +63,28 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - express-api
+      - backend
       - whoami
-
-  express-api:
-    build:
-      context: ./server
-    container_name: express-api
+    networks:
+      - backend_network
 
   whoami:
     image: traefik/whoami
     container_name: whoami
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    driver: bridge
+
+volumes:
+  data:
+
+# docker-compose down -v   # Stop and remove containers + volumes
+# docker-compose pull      # Get latest images
+# docker-compose up -d --build
+
 
 # docker pull confluentinc/cp-zookeeper:7.4.0
 # docker pull confluentinc/cp-kafka:7.4.0

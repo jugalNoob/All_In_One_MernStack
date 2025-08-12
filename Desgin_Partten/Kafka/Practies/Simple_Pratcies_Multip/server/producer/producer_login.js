@@ -1,5 +1,7 @@
 const kafka = require("../client/client");
 
+// const { CompressionTypes, Partitioners } = require('kafkajs');
+
 let producer; // Single instance
 
 /**
@@ -14,6 +16,9 @@ async function initProducer() {
     console.error("❌ Error initializing Kafka Producer:", error);
   }
 }
+
+
+
 
 /**
  * Send a message object to Kafka topic
@@ -36,7 +41,7 @@ async function sendMessage(topic, messageObj, key = null) {
       ],
     });
 console.log(`📩 Sent to "${topic}":`)
-    // console.log(`📩 Sent to "${topic}":`, messageObj);
+    console.log(`📩 Sent to "${topic}":`, messageObj);
   } catch (error) {
     console.error("❌ Kafka send error:", error.message || error);
     throw error;
