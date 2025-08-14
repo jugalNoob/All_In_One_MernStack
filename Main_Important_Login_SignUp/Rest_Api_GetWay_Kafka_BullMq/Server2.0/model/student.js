@@ -1,15 +1,29 @@
-const mongoose = require('mongoose');
-const shortid = require('shortid'); // Import shortid library
-const jobSchema = new mongoose.Schema({
+const mongoose=require('mongoose')
 
-    name: { type: String },
-    email: { type: String, unique: true },
-    password: { type: String },
-    createdAt: { type: Date, default: Date.now },
-    shortId: { type: String, unique: true }, // Ensure shortId is unique
- 
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true, unique: true },
+  price: { type: Number, required: true },
+  age: { type: Number, required: true },
+  birthDate: { type: Date, required: true },
+  bloodGroup: { type: String, required: true },
+  email: { type: String, required: true },
+  hobbies: { type: [String], required: true },
+  country: { type: String, required: true },
+  bio: { type: String, required: true },
+  isEligible: { type: Boolean, required: true },
+  gender: { type: String, required: true },
+  date: { type: Date, default: Date.now, required: true },
 });
 
-const Register = mongoose.model("Restapi", jobSchema);
+
+
+
+
+
+
+
+
+const Register = new mongoose.model("jpiusers", userSchema)
+ 
 
 module.exports = Register;
