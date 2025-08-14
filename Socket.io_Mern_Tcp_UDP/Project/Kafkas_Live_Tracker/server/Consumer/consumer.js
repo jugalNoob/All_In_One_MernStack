@@ -1,5 +1,5 @@
 // consumer.js
-const kafka = require('../client');
+const kafka = require('../client/client');
 const Register = require('../model/student');
 const connectDB = require('../db/conn');
 
@@ -10,7 +10,7 @@ async function runConsumer() {
   await consumer.connect();
   console.log("✅ Kafka Consumer connected");
 
-  await consumer.subscribe({ topic: 'random-numbers', fromBeginning: false });
+  await consumer.subscribe({ topic: 'user-signup', fromBeginning: false });
   console.log("✅ Subscribed to topic: random-numbers");
 
   await consumer.run({

@@ -5,60 +5,44 @@ const socketIo = require('socket.io');
 const cors = require('cors');
 const shortid = require('shortid');
 const connectDB = require('./db/conn');
-const { sendMessage } = require('./producer');
+const  { initProducer, PostsendMessage } = require('./Producer/Postproducer'); ///post  Producer 
+const router = require("./routes/router");
+
 const Register = require('./model/student');
+
+const  redisClient  = require('./Redis/redisClient'); // ✅ fix
 
 const app = express();
 const server = http.createServer(app);
+
+
+
 const io = socketIo(server, {
-  cors: { origin: 'http://localhost:3000' },
+  cors: {
+    origin: "http://localhost:3000",  // allow React app
+    methods: ["GET", "POST"],
+    credentials: true
+  },
 });
+
+
+// console.log(io)
+
+
 const port = 9000;
 
 app.use(cors());
 app.use(express.json());
+app.use(router);
 
 
-// Let me know if you want to:
-
-// Consume user-fetch-events and save to DB
-
-// Broadcast Kafka updates via Socket.IO
-
-// Display user + Kafka status on a React dashboard
-
-// All of this can scale beautifully with your current stack 💪
-
-
-// ✅ Your GET route to fetch data from MongoDB
-app.get('/home', async (req, res) => {
-  try {
-    const data = await Register.find(); // assuming you have a Register model
-
-    // ✅ Send user data to Kafka
-    await sendMessage("user-fetch-events", "all_users", data);
-
-    await sendMessage("user-fetch-events", {
-      event: "FETCH_ALL_USERS",
-      timestamp: new Date().toISOString(),
-      payload: data
-    });
-
-    console.log("Users sent to Kafka successfully");
-
-    res.status(200).json(data); // only one response
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    res.status(500).send('Server Error');
-  }
-});
-
-// const users = await Register.find().select("-password -__v"); // omit sensitive fields
 
 
 
 (async () => {
   await connectDB();
+  await initProducer(); // ✅ now awaited
+  console.log('io')
 
   io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
@@ -79,12 +63,15 @@ app.get('/home', async (req, res) => {
         };
 
         try {
-          await sendMessage("random-numbers", payload);
+          await PostsendMessage("user-signup", payload);
         } catch (err) {
           console.error("❌ Kafka error:", err);
         }
       }
-    }, 30000);
+    }, 300000);
+
+    
+
 
     socket.on('disconnect', () => {
       clearInterval(emitInterval);
@@ -97,3 +84,16 @@ app.get('/home', async (req, res) => {
     console.log(`🚀 Server running at http://localhost:${port}`);
   });
 })();
+
+
+
+// Let me know if you want to:
+
+// Consume user-fetch-events and save to DB
+
+// Broadcast Kafka updates via Socket.IO
+
+// Display user + Kafka status on a React dashboard
+
+// All of this can scale beautifully with your current stack 💪
+
