@@ -18,12 +18,7 @@ const userSchema = new mongoose.Schema({
 
 
 
-
-
-
-
-
-const Register = new mongoose.model("jpiusers", userSchema)
+const Register = new mongoose.model("Means", userSchema)
  
 
 module.exports = Register;

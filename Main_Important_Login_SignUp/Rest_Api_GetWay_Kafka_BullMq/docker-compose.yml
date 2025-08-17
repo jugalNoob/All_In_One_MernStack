@@ -16,7 +16,18 @@ services:
     build:
       context: ./server
     container_name: express-api
+    depends_on:
+      - redis
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
 
   whoami:
     image: traefik/whoami
     container_name: whoami
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"

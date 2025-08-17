@@ -37,9 +37,19 @@ app.use(cors(corsOptions));
 app.use(router)
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Kong Gateway is forwarding properly!' });
+  res.json({ message: 'Kong Gateway is forwarding properly! jugal sharma' });
 });
 
+
+
+app.get('/jugal', (req, res) => {
+  res.json({ 
+    name:'jugal sharma',
+    rollno:45,
+    class:'10th',
+    io:'AI'
+   });
+});
 
 
 

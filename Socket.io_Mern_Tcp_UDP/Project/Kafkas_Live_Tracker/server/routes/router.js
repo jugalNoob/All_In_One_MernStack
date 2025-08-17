@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Register = require('../model/student');
-
+const  redisClient  = require('./Redis/redisClient'); // ✅ fix
 const  { GetinitProducer,  GetsendMessage }  = require('../Producer/getproducer'); ///get  Producer 
 
 
