@@ -1,6 +1,6 @@
 const express = require('express');
 
-const connectMongo=require("./db/Compose/comp")
+const connectMongo=require("./db/alts/conn")
 // 👈 must be called before handling any routes
 //------------------------------------------
 const router = require('./routes/router');  // Assuming router handles your /form route

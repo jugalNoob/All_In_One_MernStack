@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
 
 
 
-const Register = new mongoose.model("Means", userSchema)
+const Register = new mongoose.model("Restapis", userSchema)
  
 
 module.exports = Register;
