@@ -1,19 +1,20 @@
 const express = require('express');
-const router = require('./routes/router');
-require("./db/conn");
+const { createServer } = require('http');
+const { Server } = require('socket.io');
 
 const app = express();
-
-// Parse form data
-app.use(express.urlencoded({ extended: true }));
-
-// Parse JSON
-app.use(express.json({ strict: true, limit: '10kb' }));
-
-// Routes
-app.use(router);
-
-const PORT = 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: { origin: "*" }  // Allow all for dev
 });
+
+io.on('connection', (socket) => {
+  console.log('🔌 Client connected:', socket.id);
+});
+
+httpServer.listen(4000, () => {
+  console.log('🚀 Socket.IO server running on http://localhost:4000');
+});
+
+// Export io so workers can use it
+module.exports = io;

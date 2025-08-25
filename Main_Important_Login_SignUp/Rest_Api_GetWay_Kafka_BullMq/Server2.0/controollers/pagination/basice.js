@@ -5,8 +5,22 @@ const Register=require("../../model/student")
 // const { redisClient } = require("../Redis/redisClient"); // ✅ fix
 //http://localhost:9000/search?page=1&limit // page is limit is 
 
+
+const { redisClient } = require("../../Redis/redisClient"); // ✅ fix
+
+
 exports.ApigetPagination = async (req, res) => { 
     try {
+
+           // 1. Check Redis cache first
+    const cachedData = await redisClient.get('students');
+
+    if (cachedData) {
+      console.log('✅ Data from Redis cache');
+      return res.status(200).json(JSON.parse(cachedData));
+    }
+
+
         let page = Number(req.query.page) || 1;
         let limit = Number(req.query.limit) || 10;
         let skip = (page - 1) * limit;
@@ -16,6 +30,9 @@ exports.ApigetPagination = async (req, res) => {
          Register.countDocuments().sort().lean()
         ]);
 
+          //     // 3. Save result to Redis with an expiry (optional)
+            await redisClient.setEx('students', 3600, JSON.stringify(data)); // 1 hour = 3600 seconds
+        
         res.status(200).json({
             total,
             page,

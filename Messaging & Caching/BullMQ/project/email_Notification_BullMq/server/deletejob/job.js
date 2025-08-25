@@ -1,3 +1,59 @@
+
+const { Queue } = require('bullmq');
+const IORedis = require('ioredis');
+
+// Redis connection (customize for production if needed)
+const connection = new IORedis({
+  host: 'localhost', // or your Redis host
+  port: 6379,
+  maxRetriesPerRequest: null,
+});
+
+const queue = new Queue('emailQueue', { connection });
+
+// Utility function to log current timestamp
+const now = () => new Date().toISOString();
+
+/**
+ * Cleans completed and failed jobs older than 10 seconds
+ */
+const cleanOldJobs = async () => {
+  try {
+    const completed = await queue.clean(10000, 100, 'completed');
+    const failed = await queue.clean(10000, 100, 'failed');
+
+    if (completed.length || failed.length) {
+      console.log(`[${now()}] 🧹 Cleaned - Completed: ${completed.length}, Failed: ${failed.length}`);
+    }
+  } catch (err) {
+    console.error(`[${now()}] ❌ Clean Error:`, err.message);
+  }
+};
+
+/**
+ * Logs counts of job states
+ */
+const logJobStates = async () => {
+  try {
+    const [completed, failed, active, waiting, delayed] = await Promise.all([
+      queue.getJobCountByTypes('completed'),
+      queue.getJobCountByTypes('failed'),
+      queue.getJobCountByTypes('active'),
+      queue.getJobCountByTypes('waiting'),
+      queue.getJobCountByTypes('delayed'),
+    ]);
+
+    console.log(`[${now()}] 📊 Queue Status → Completed: ${completed}, Failed: ${failed}, Active: ${active}, Waiting: ${waiting}, Delayed: ${delayed}`);
+  } catch (err) {
+    console.error(`[${now()}] ❌ State Logging Error:`, err.message);
+  }
+};
+
+// Run every 5 seconds
+setInterval(cleanOldJobs, 5000);
+setInterval(logJobStates, 5000);
+
+
 // const { Queue } = require('bullmq');
 // const IORedis = require('ioredis');
 
@@ -64,60 +120,3 @@
 // setInterval(obliterateQueue, 10000)
 
 
-
-
-
-
-const { Queue } = require('bullmq');
-const IORedis = require('ioredis');
-
-// Redis connection (customize for production if needed)
-const connection = new IORedis({
-  host: 'localhost', // or your Redis host
-  port: 6379,
-  maxRetriesPerRequest: null,
-});
-
-const queue = new Queue('emailQueue', { connection });
-
-// Utility function to log current timestamp
-const now = () => new Date().toISOString();
-
-/**
- * Cleans completed and failed jobs older than 10 seconds
- */
-const cleanOldJobs = async () => {
-  try {
-    const completed = await queue.clean(10000, 100, 'completed');
-    const failed = await queue.clean(10000, 100, 'failed');
-
-    if (completed.length || failed.length) {
-      console.log(`[${now()}] 🧹 Cleaned - Completed: ${completed.length}, Failed: ${failed.length}`);
-    }
-  } catch (err) {
-    console.error(`[${now()}] ❌ Clean Error:`, err.message);
-  }
-};
-
-/**
- * Logs counts of job states
- */
-const logJobStates = async () => {
-  try {
-    const [completed, failed, active, waiting, delayed] = await Promise.all([
-      queue.getJobCountByTypes('completed'),
-      queue.getJobCountByTypes('failed'),
-      queue.getJobCountByTypes('active'),
-      queue.getJobCountByTypes('waiting'),
-      queue.getJobCountByTypes('delayed'),
-    ]);
-
-    console.log(`[${now()}] 📊 Queue Status → Completed: ${completed}, Failed: ${failed}, Active: ${active}, Waiting: ${waiting}, Delayed: ${delayed}`);
-  } catch (err) {
-    console.error(`[${now()}] ❌ State Logging Error:`, err.message);
-  }
-};
-
-// Run every 5 seconds
-setInterval(cleanOldJobs, 5000);
-setInterval(logJobStates, 5000);

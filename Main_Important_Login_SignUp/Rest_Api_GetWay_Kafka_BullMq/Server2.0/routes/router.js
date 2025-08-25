@@ -13,6 +13,9 @@ const pagadavance=require('../controollers/pagination/Advance')
 
 
 
+
+// --- >Simple Get User Information ------------>>
+
 router.get("/get", Apigetuser.Apiget);
 router.post("/userPost", PostUser.first);
 

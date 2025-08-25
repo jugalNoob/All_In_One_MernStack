@@ -1,0 +1,75 @@
+[{
+  "_id": {
+    "$oid": "689c1f1ab90bb79fe906f12d"
+  },
+  "name": "opnathan",
+  "price": 2057,
+  "age": 20,
+  "birthDate": {
+    "$date": "2005-01-28T00:00:00.000Z"
+  },
+  "bloodGroup": "B-",
+  "email": "alejandra01@hotmail.com",
+  "hobbies": [
+    "coding",
+    "reading"
+  ],
+  "country": "Niger",
+  "bio": "I am into tech and teaching.",
+  "isEligible": true,
+  "gender": "male",
+  "date": {
+    "$date": "2025-08-13T05:14:02.378Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689c1fa2b90bb79fe906f132"
+  },
+  "name": "jugal",
+  "price": 2057,
+  "age": 20,
+  "birthDate": {
+    "$date": "2005-01-28T00:00:00.000Z"
+  },
+  "bloodGroup": "B-",
+  "email": "alejandra01@hotmail.com",
+  "hobbies": [
+    "coding",
+    "reading"
+  ],
+  "country": "Niger",
+  "bio": "I am into tech and teaching.",
+  "isEligible": true,
+  "gender": "male",
+  "date": {
+    "$date": "2025-08-13T05:16:18.409Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689c2016b90bb79fe906f135"
+  },
+  "name": "jugalsharma",
+  "price": 2057,
+  "age": 20,
+  "birthDate": {
+    "$date": "2005-01-28T00:00:00.000Z"
+  },
+  "bloodGroup": "B-",
+  "email": "alejandra01@hotmail.com",
+  "hobbies": [
+    "coding",
+    "reading"
+  ],
+  "country": "Niger",
+  "bio": "I am into tech and teaching.",
+  "isEligible": true,
+  "gender": "male",
+  "date": {
+    "$date": "2025-08-13T05:18:14.951Z"
+  },
+  "__v": 0
+}]
