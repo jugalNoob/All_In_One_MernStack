@@ -1,3 +1,14 @@
+Flow Explanation
+
+Client adds a job to the queue using queue.add("jobName", data).
+
+Queue stores the job in Redis → supports delayed execution, retries, and priority.
+
+Worker picks up jobs from the queue and processes them asynchronously.
+
+Events fired (completed, failed, progress) → client or dashboard can listen for updates.
+
+
 1. What is BullMQ? How is it different from Bull (v3)?
 
 Ans:BullMQ is a Node.js-based message queue built on Redis. It is the successor to Bull (v3) and is designed with modern features and better reliability.
