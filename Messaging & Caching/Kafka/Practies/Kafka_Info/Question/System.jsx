@@ -1,3 +1,19 @@
+Perfect 👌 Here’s a mini ASCII diagram that you can quickly explain in interviews:
+
+🔴 Redis Pub/Sub (No Storage)
+Publisher  --->  Redis (in-memory)  --->  Subscriber
+   (YouTuber)           📡             (Live Viewer)
+
+👉 If subscriber is offline → ❌ message lost
+
+
+🟢 Kafka Pub/Sub (With Storage & Replay)
+Publisher  --->  Kafka Topic (stored in partitions)  --->  Consumer Group
+   (YouTuber)              📼 partitions                (Viewers, can watch later)
+
+👉 If consumer is offline → ✅ can read later (replay)
+
+
 🔹 Scenario & System Design Questions
 
 Design a Kafka architecture for:
